@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>io.statigate</groupId>
+        <artifactId>statigate-parent</artifactId>
+        <version>0.1.0-SNAPSHOT</version>
+    </parent>
+
+    <artifactId>pipeline</artifactId>
+    <name>statigate-pipeline</name>
+    <description>End-to-end orchestration: ingestion to extraction to grounding to advisory.</description>
+
+    <dependencies>
+        <dependency>
+            <groupId>io.statigate</groupId>
+            <artifactId>core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.statigate</groupId>
+            <artifactId>nlp</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.statigate</groupId>
+            <artifactId>ingestion</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.statigate</groupId>
+            <artifactId>extraction</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.statigate</groupId>
+            <artifactId>grounding</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.statigate</groupId>
+            <artifactId>advisory</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+        </dependency>
+    </dependencies>
+</project>

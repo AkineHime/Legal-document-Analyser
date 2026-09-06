@@ -1,0 +1,30 @@
+# Build output
+target/
+*.class
+
+# Model assets — fetched/built locally, never committed (see scripts/)
+/models/
+
+# Optional local LLM weights
+/models/llm/
+
+# IDE
+.idea/
+*.iml
+.vscode/
+.settings/
+.classpath
+.project
+
+# OS
+Thumbs.db
+.DS_Store
+
+# Logs
+*.log
+
+# Python setup venv for the model export scripts
+.venv/
+.venv-tools/
+__pycache__/
+*.pyc

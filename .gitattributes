@@ -1,0 +1,6 @@
+# Normalize line endings: text files stored LF, checked out native.
+* text=auto eol=lf
+
+*.bin binary
+*.pdf binary
+*.jar binary

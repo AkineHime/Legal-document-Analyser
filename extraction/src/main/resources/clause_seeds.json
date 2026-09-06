@@ -1,0 +1,118 @@
+{
+  "_comment": "Prototype phrases per clause type. The extraction module embeds these with InLegalBERT and classifies a clause by nearest centroid. Keep entries short and prototypical.",
+  "INDEMNITY": [
+    "The party shall indemnify, defend and hold harmless the other party from and against any claims, losses, damages and expenses arising out of the agreement.",
+    "Each party agrees to indemnify the other against third party claims resulting from its breach of this agreement.",
+    "The Client shall indemnify the Service Provider for all liabilities without any monetary cap."
+  ],
+  "LIMITATION_OF_LIABILITY": [
+    "In no event shall either party be liable for any indirect, incidental, special or consequential damages.",
+    "The aggregate liability of the Service Provider under this agreement shall not exceed the fees paid in the preceding twelve months.",
+    "Neither party shall be liable for loss of profits, revenue or goodwill."
+  ],
+  "TERMINATION": [
+    "Either party may terminate this agreement for material breach that remains uncured for thirty days after written notice.",
+    "The Company may terminate this agreement for convenience upon thirty days prior written notice.",
+    "On termination all licences granted under this agreement shall immediately cease."
+  ],
+  "RENEWAL": [
+    "This agreement shall automatically renew for successive one year periods unless either party gives notice of non-renewal.",
+    "The initial term shall be twelve months and shall renew automatically thereafter.",
+    "Renewal is subject to a revised fee schedule notified by the Service Provider."
+  ],
+  "PAYMENT": [
+    "The Client shall pay the fees within fifteen days of receipt of a valid invoice.",
+    "Overdue amounts shall carry interest at two percent per month until paid.",
+    "All fees are exclusive of applicable goods and services tax."
+  ],
+  "CONFIDENTIALITY": [
+    "Each party shall keep confidential all non-public information disclosed by the other party.",
+    "The receiving party shall not disclose confidential information to any third party without prior written consent.",
+    "Confidentiality obligations shall survive termination for a period of three years."
+  ],
+  "GOVERNING_LAW": [
+    "This agreement shall be governed by and construed in accordance with the laws of India.",
+    "The validity and interpretation of this agreement shall be governed by Indian law.",
+    "This agreement is subject to the laws in force in the Republic of India."
+  ],
+  "DISPUTE_RESOLUTION": [
+    "The parties shall first attempt to resolve any dispute through good faith negotiation between senior management.",
+    "Any dispute not resolved through mediation shall be referred to arbitration.",
+    "Disputes shall be escalated in accordance with the dispute resolution procedure set out in this clause."
+  ],
+  "ARBITRATION": [
+    "Any dispute arising out of this agreement shall be finally resolved by arbitration under the Arbitration and Conciliation Act, 1996.",
+    "The seat and venue of arbitration shall be Bengaluru and the language of arbitration shall be English.",
+    "The arbitral tribunal shall consist of a sole arbitrator appointed by mutual agreement of the parties."
+  ],
+  "JURISDICTION": [
+    "The courts at Mumbai shall have exclusive jurisdiction over any proceedings arising out of this agreement.",
+    "Subject to the arbitration clause, the parties submit to the exclusive jurisdiction of the courts of New Delhi.",
+    "Only the courts within whose limits the registered office is situated shall have jurisdiction."
+  ],
+  "FORCE_MAJEURE": [
+    "Neither party shall be liable for any delay or failure to perform caused by events beyond its reasonable control.",
+    "Force majeure events include acts of God, war, epidemic, flood, fire and action of government.",
+    "If a force majeure event continues for more than sixty days either party may terminate this agreement."
+  ],
+  "INTELLECTUAL_PROPERTY": [
+    "All intellectual property rights in the deliverables shall vest in the Client upon full payment.",
+    "The Service Provider retains ownership of its pre-existing tools, libraries and know-how.",
+    "Each party retains all right, title and interest in its background intellectual property."
+  ],
+  "DATA_PROTECTION": [
+    "Each party shall comply with applicable data protection law including the Digital Personal Data Protection Act, 2023.",
+    "The processor shall implement appropriate technical and organisational measures to protect personal data.",
+    "Personal data shall not be transferred outside India without the data principal's consent."
+  ],
+  "NON_COMPETE": [
+    "During the term and for one year thereafter the Consultant shall not engage in any business that competes with the Company.",
+    "The employee shall not directly or indirectly carry on a competing business within the territory.",
+    "This restriction is limited to the specific line of business of the Company."
+  ],
+  "NON_SOLICITATION": [
+    "Neither party shall solicit for employment any employee of the other party during the term and for twelve months thereafter.",
+    "The Client shall not solicit or entice away any personnel engaged by the Service Provider.",
+    "This clause does not prevent hiring through a general public advertisement."
+  ],
+  "WARRANTY": [
+    "The Service Provider warrants that the services shall be performed in a professional and workmanlike manner.",
+    "Each party represents and warrants that it has full power and authority to enter into this agreement.",
+    "Except as expressly stated, all warranties whether express or implied are excluded."
+  ],
+  "ASSIGNMENT": [
+    "Neither party may assign or transfer this agreement without the prior written consent of the other party.",
+    "The Company may assign this agreement to an affiliate or in connection with a merger or sale of business.",
+    "Any purported assignment in breach of this clause shall be void."
+  ],
+  "NOTICES": [
+    "Any notice under this agreement shall be in writing and delivered by hand, registered post or email to the address set out below.",
+    "Notices shall be deemed received two business days after posting or on confirmation of email delivery.",
+    "A party may change its address for notices by giving written notice to the other party."
+  ],
+  "ENTIRE_AGREEMENT": [
+    "This agreement constitutes the entire agreement between the parties and supersedes all prior discussions and understandings.",
+    "No representation or warranty not expressly set out in this agreement shall be binding on the parties.",
+    "This agreement together with its schedules records the whole agreement between the parties."
+  ],
+  "AMENDMENT": [
+    "No amendment or variation of this agreement shall be effective unless made in writing and signed by both parties.",
+    "Any modification to the scope of work shall be agreed through a written change order.",
+    "The parties may amend the fee schedule only by mutual written agreement."
+  ],
+  "SEVERABILITY": [
+    "If any provision of this agreement is held to be invalid or unenforceable the remaining provisions shall continue in full force.",
+    "The invalid provision shall be replaced by a valid provision that most closely reflects the intention of the parties.",
+    "The unenforceability of one clause shall not affect the validity of the rest of the agreement."
+  ],
+  "SCOPE_OF_WORK": [
+    "The Service Provider shall provide software development and maintenance services as described in each statement of work.",
+    "The scope of services includes design, implementation, testing and support of the platform.",
+    "Each statement of work shall set out the deliverables, timelines and acceptance criteria."
+  ],
+  "PARTIES": [
+    "This Agreement is made between Acme Technologies Private Limited, a company incorporated under the Companies Act 2013 with its registered office at Bengaluru, and Beta Ventures LLP with its principal place of business at Chennai.",
+    "This Services Agreement is entered into by and between the Company and the Consultant, each a party and together the parties.",
+    "The parties to this agreement are the Client and the Service Provider as identified above."
+  ]
+}

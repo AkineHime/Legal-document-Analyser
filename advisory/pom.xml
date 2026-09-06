@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>io.statigate</groupId>
+        <artifactId>statigate-parent</artifactId>
+        <version>0.1.0-SNAPSHOT</version>
+    </parent>
+
+    <artifactId>advisory</artifactId>
+    <name>statigate-advisory</name>
+    <description>
+        Grounded, plain-language advisory notes. The default is a deterministic template engine that
+        cannot hallucinate; an optional local LLM (JLama, in-process JVM-native) rephrases within
+        hard guardrails. Output is advisory framing only, never legal advice.
+    </description>
+    <dependencies>
+        <dependency>
+            <groupId>io.statigate</groupId>
+            <artifactId>core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+        </dependency>
+
+        <!-- Optional in-process LLM backend. Only exercised when the advisory backend is 'jlama'. -->
+        <dependency>
+            <groupId>com.github.tjake</groupId>
+            <artifactId>jlama-core</artifactId>
+            <version>${jlama.version}</version>
+            <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>com.github.tjake</groupId>
+            <artifactId>jlama-native</artifactId>
+            <version>${jlama.version}</version>
+            <classifier>${jlama.native.classifier}</classifier>
+            <optional>true</optional>
+        </dependency>
+    </dependencies>
+</project>

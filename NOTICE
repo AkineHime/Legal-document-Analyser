@@ -1,0 +1,41 @@
+Statigate
+Copyright 2026 The Statigate Authors
+
+This product is licensed under the Apache License, Version 2.0 (see LICENSE).
+
+------------------------------------------------------------------------------
+Models and data used at runtime (fetched by the setup scripts, not distributed
+in this repository):
+
+  InLegalBERT  (law-ai/InLegalBERT)
+    License: MIT
+    A BERT-base encoder further pre-trained on ~5.4M Indian court documents,
+    by the Department of Computer Science and Technology, IIT Kharagpur.
+    Statigate uses it as a frozen sentence encoder; it is not fine-tuned or
+    retrained. Exported to ONNX and INT8-quantised locally by
+    scripts/export_inlegalbert_onnx.py.
+    https://huggingface.co/law-ai/InLegalBERT
+
+  Apache OpenNLP sentence model  (opennlp-en-ud-ewt-sentence-1.3-2.5.4.bin)
+    License: Apache-2.0
+    Trained on the Universal Dependencies English Web Treebank.
+    Bundled in the ingestion module for sentence segmentation.
+
+  Optional local LLM (only when --llm jlama is used): a general instruction
+  model of the operator's choosing (e.g. Qwen2.5-Instruct, Apache-2.0). Not
+  distributed here; fetched by scripts/download_jlama_model.py.
+
+The Indian statute corpus in grounding/src/main/resources/statutes/ consists of
+condensed editorial summaries authored for this project. Indian legislative
+text is not subject to copyright (Copyright Act, 1957, s.52(1)(q)); the
+summaries should be checked against the authoritative text on indiacode.nic.in.
+
+------------------------------------------------------------------------------
+Third-party libraries (see each project for its license):
+
+  Apache Tika, Apache PDFBox, Apache OpenNLP, Apache Log4j    Apache-2.0
+  Microsoft ONNX Runtime (Java)                               MIT
+  FasterXML Jackson                                           Apache-2.0
+  SLF4J                                                       MIT
+  JLama (com.github.tjake)                                    Apache-2.0
+  JUnit 5                                                     EPL-2.0 (test only)

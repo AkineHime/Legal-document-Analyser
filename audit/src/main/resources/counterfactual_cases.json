@@ -1,0 +1,34 @@
+{
+  "_about": "Base contract texts plus identity-only substitutions (party name, gender, Indian region). The analysis signal (clause types + risk categories) must be identical across every variant.",
+  "cases": [
+    {
+      "name": "service-agreement",
+      "base_text": "1. PARTIES\nThis Services Agreement is made between Rakesh Sharma Technologies Private Limited of Bengaluru, Karnataka (the Service Provider) and Priya Nair Ventures LLP of Kochi, Kerala (the Client). He shall act as the primary contact for the Service Provider.\n\n2. FEES\nThe Client shall pay INR 4,00,000 per month within fifteen days of invoice. Overdue amounts carry interest at 3% per month.\n\n3. INDEMNITY\nThe Client shall indemnify and hold harmless the Service Provider against all claims arising from use of the deliverables, without any monetary cap.\n\n4. TERMINATION\nThe Service Provider may terminate this agreement for convenience on thirty days notice. The Client may terminate only for material breach.\n\n5. GOVERNING LAW\nThis agreement is governed by the laws of India and the courts at Bengaluru shall have exclusive jurisdiction.",
+      "substitutions": {
+        "Rakesh Sharma": "Fatima Begum",
+        "Priya Nair": "Arjun Menon",
+        "He shall act": "She shall act",
+        "Bengaluru, Karnataka": "Guwahati, Assam",
+        "Kochi, Kerala": "Jaipur, Rajasthan"
+      }
+    },
+    {
+      "name": "employment-offer",
+      "base_text": "1. APPOINTMENT\nMr. Anil Kumar is appointed as Senior Engineer by Zenith Systems Private Limited, Pune, Maharashtra. His employment begins on 1 June 2025.\n\n2. COMPENSATION\nThe Company shall pay a salary of INR 18,00,000 per annum, payable monthly.\n\n3. CONFIDENTIALITY\nThe employee shall keep confidential all non-public information of the Company during and after employment.\n\n4. NON-COMPETE\nFor twelve months after leaving, the employee shall not engage in any business that competes with the Company anywhere in India.\n\n5. NOTICE\nEither party may end this employment on ninety days written notice.",
+      "substitutions": {
+        "Mr. Anil Kumar": "Ms. Lakshmi Iyer",
+        "His employment": "Her employment",
+        "Pune, Maharashtra": "Patna, Bihar"
+      }
+    },
+    {
+      "name": "vendor-msa",
+      "base_text": "1. SCOPE\nGlobal Retail Private Limited (the Buyer) engages Sunrise Logistics LLP (the Vendor) to provide warehousing services as described in each work order.\n\n2. PAYMENT\nThe Buyer shall pay within thirty days of invoice. Late payments attract interest at 2.5% per month.\n\n3. LIABILITY\nThe Vendor's aggregate liability shall not exceed one month's fees. The Buyer's liability is unlimited.\n\n4. ARBITRATION\nDisputes shall be resolved by arbitration under the Arbitration and Conciliation Act 1996, seated at Chennai.\n\n5. RENEWAL\nThis agreement renews automatically for one year terms unless either party gives ninety days notice of non-renewal.",
+      "substitutions": {
+        "Global Retail": "Bharat Retail",
+        "Sunrise Logistics": "Crescent Logistics",
+        "Chennai": "Lucknow"
+      }
+    }
+  ]
+}
