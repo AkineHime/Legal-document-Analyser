@@ -34,10 +34,13 @@ import java.nio.file.Path;
  *   --json                 emit JSON instead of the text report
  *   --models DIR           model asset directory (default: ./models or $STATIGATE_MODELS)
  *   --no-model             skip InLegalBERT even if present (keyword/BM25 only)
- *   --llm jlama            rephrase advice with a local JLama model (needs --llm-model)
- *   --llm-model DIR        local JLama model directory
  *   --threads N            ONNX intra-op threads (default: half the CPUs)
  *   --check-onnx           verify ONNX Runtime native libraries and exit
+ *   --llm jlama            EXPERIMENTAL: rephrase advice with a local JLama model (needs --llm-model
+ *                          and the JVM flags --enable-preview --add-modules jdk.incubator.vector).
+ *                          Small models invent specifics and are rejected by the guardrail; the
+ *                          deterministic extractive backend remains the default and the recommendation.
+ *   --llm-model DIR        local JLama model directory
  * </pre>
  */
 public final class StatigateCli {
@@ -167,7 +170,7 @@ public final class StatigateCli {
                   --json              emit JSON instead of the text report
                   --models DIR        model asset directory (default ./models or $STATIGATE_MODELS)
                   --no-model          keyword + BM25 only, skip InLegalBERT
-                  --llm jlama         rephrase advice with a local JLama model
+                  --llm jlama         EXPERIMENTAL: rephrase advice with a local JLama model
                   --llm-model DIR     local JLama model directory
                   --threads N         ONNX intra-op threads
                   --check-onnx        verify ONNX Runtime native libraries

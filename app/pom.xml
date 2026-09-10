@@ -66,18 +66,15 @@
             <scope>runtime</scope>
         </dependency>
 
-        <!-- Bundle JLama so the optional local-LLM advisory backend works from the fat JAR
-             (needs preview and vector-API flags at runtime). -->
+        <!-- Bundle JLama so the optional local-LLM advisory backend works from the fat JAR.
+             Uses JLama's pure-JVM Panama Vector path (the jdk.incubator.vector module must be
+             added at runtime). jlama-native is deliberately NOT bundled: its SIMD kernels
+             produced incorrect output on Windows in 0.8.4. Opt into native acceleration only on
+             a platform where it is known good, by adding jlama-native to the classpath. -->
         <dependency>
             <groupId>com.github.tjake</groupId>
             <artifactId>jlama-core</artifactId>
             <version>${jlama.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.github.tjake</groupId>
-            <artifactId>jlama-native</artifactId>
-            <version>${jlama.version}</version>
-            <classifier>${jlama.native.classifier}</classifier>
         </dependency>
     </dependencies>
 
@@ -100,6 +97,9 @@
                                 <transformer
                                         implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
                                     <mainClass>${main.class}</mainClass>
+                                    <manifestEntries>
+                                        <Enable-Native-Access>ALL-UNNAMED</Enable-Native-Access>
+                                    </manifestEntries>
                                 </transformer>
                                 <transformer
                                         implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer"/>

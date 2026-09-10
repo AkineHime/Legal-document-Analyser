@@ -81,7 +81,22 @@ java --enable-native-access=ALL-UNNAMED -jar app/target/statigate.jar contract.p
 | `--no-model` | keyword + BM25 only |
 | `--threads N` | ONNX intra-op threads |
 | `--check-onnx` | verify the ONNX Runtime native libraries |
-| `--llm jlama --llm-model DIR` | rephrase advice with a local JLama model (needs `--enable-preview --add-modules jdk.incubator.vector`) |
+| `--llm jlama --llm-model DIR` | **experimental** — rephrase advice with a local JLama model (needs `--enable-preview --add-modules jdk.incubator.vector`) |
+
+### The optional local LLM
+
+`--llm jlama` runs a local model **in-process** (pure JVM, no socket) to rephrase the deterministic
+advice. It is guardrailed: output that cites a section, or introduces a name, number, date or
+period, not present in the source is discarded and the deterministic text is used instead. Small
+models (Qwen2.5-0.5B and the like) invent specifics constantly and so are mostly rejected —
+budget a 3B+ instruct model for usable rephrasing, and expect ~10–20 s per clause on CPU. **The
+deterministic extractive backend is the default and the recommendation.**
+
+```bash
+python scripts/download_jlama_model.py Qwen/Qwen2.5-3B-Instruct
+java --enable-preview --add-modules jdk.incubator.vector --enable-native-access=ALL-UNNAMED \
+  -jar app/target/statigate.jar contract.pdf --llm jlama --llm-model models/llm/Qwen2.5-3B-Instruct
+```
 
 Fairness check:
 

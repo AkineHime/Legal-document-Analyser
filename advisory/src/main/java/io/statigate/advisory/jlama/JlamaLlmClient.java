@@ -47,6 +47,7 @@ public final class JlamaLlmClient implements LlmClient {
 
     private final AbstractModel model;
     private final String modelId;
+    private final int contextLength;
 
     /** Loads a model from a local directory (already downloaded). */
     public JlamaLlmClient(Path modelDir) {
@@ -56,8 +57,10 @@ public final class JlamaLlmClient implements LlmClient {
         }
         try {
             this.model = ModelSupport.loadModel(modelDir.toFile(), DType.F32, DType.I8);
+            this.contextLength = model.getConfig().contextLength;
             this.modelId = "jlama:" + modelDir.getFileName();
-            log.info("Loaded JLama model {} ({})", modelId, model.getClass().getSimpleName());
+            log.info("Loaded JLama model {} ({}, context {})",
+                    modelId, model.getClass().getSimpleName(), contextLength);
         } catch (UnsupportedOperationException | LinkageError e) {
             throw new IllegalStateException(
                     "JLama failed to initialize. Launch the JVM with: --enable-preview "
@@ -85,8 +88,19 @@ public final class JlamaLlmClient implements LlmClient {
                         .addUserMessage(user)
                         .build())
                 .orElseGet(() -> PromptContext.of(system + "\n\n" + user));
+
+        // JLama's `ntokens` argument is the TOTAL budget (prompt + generation), and it requires
+        // promptTokens < ntokens. Pass prompt length plus the room we want for the answer.
+        int promptTokens = model.encodePrompt(ctx).length;
+        int room = contextLength - promptTokens - 8;
+        if (room < 32) {
+            throw new IllegalArgumentException(
+                    "prompt (" + promptTokens + " tokens) leaves no room in the " + contextLength
+                            + "-token context");
+        }
+        int totalBudget = promptTokens + Math.max(48, Math.min(maxNewTokens, room));
         Generator.Response resp = model.generate(
-                UUID.randomUUID(), ctx, TEMPERATURE, maxNewTokens, (tok, t) -> { });
+                UUID.randomUUID(), ctx, TEMPERATURE, totalBudget, (tok, t) -> { });
         return resp.responseText == null ? "" : resp.responseText.strip();
     }
 

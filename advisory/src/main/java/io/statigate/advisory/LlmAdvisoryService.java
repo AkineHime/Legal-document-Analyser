@@ -35,24 +35,29 @@ import org.slf4j.LoggerFactory;
  * <ul>
  *   <li>the prompt contains only the clause text, the rule-derived rationale, and the retrieved
  *       statute summaries - nothing else;</li>
- *   <li>the output is rejected if it cites a "Section N" that was not in the prompt, or if it is
- *       empty/too long;</li>
+ *   <li>the output is rejected if it cites a "Section N" that was not in the prompt, introduces a
+ *       number (date, amount, address, period) not present in the source material, runs
+ *       substantially longer than the deterministic text, or is empty;</li>
  *   <li>on any rejection the deterministic {@link ExtractiveAdvisoryService} output is used instead.</li>
  * </ul>
  *
- * The LLM never introduces a legal claim that was not already grounded.
+ * <p><b>Experimental.</b> Rephrasing quality depends entirely on the local model; small models
+ * (&lt;3B) tend to invent specifics and are caught by the guardrail, so most output falls back to
+ * the deterministic engine. The extractive backend remains the recommended default.
  */
 public final class LlmAdvisoryService implements AdvisoryService {
 
     private static final Logger log = LoggerFactory.getLogger(LlmAdvisoryService.class);
     private static final Pattern SECTION_REF = Pattern.compile("\\bSection\\s+\\d+[A-Z]?", Pattern.CASE_INSENSITIVE);
-    private static final int MAX_NEW_TOKENS = 220;
+    private static final int MAX_NEW_TOKENS = 160;
+    private static final int CLAUSE_CHARS = 700;
+    private static final int STATUTE_NOTE_CHARS = 180;
 
     private static final String SYSTEM = """
-            You explain one clause of an Indian commercial contract to a non-lawyer.
-            Use ONLY the clause text and the statute notes provided. Do not mention any section
-            number, case, or Act that is not in the notes. Do not give a verdict or tell the reader
-            what to do. Write 2-3 plain sentences. Finish with: This is not legal advice.""";
+            Rewrite the note below in plain language for a non-lawyer, staying strictly within the
+            given clause text and statute notes. Do NOT add any name, company, address, date,
+            amount, time period or section number that is not already written in the material you
+            were given. Do not give a verdict. Two or three sentences. End with: This is not legal advice.""";
 
     private final LlmClient llm;
     private final ExtractiveAdvisoryService fallback;
@@ -90,8 +95,8 @@ public final class LlmAdvisoryService implements AdvisoryService {
                 Statute notes (the only law you may mention):
                 %s
                 """.formatted(
-                truncate(clause.text(), 1200),
-                deterministic.body(),
+                truncate(clause.text(), CLAUSE_CHARS),
+                truncate(deterministic.body(), 500),
                 allowed.isBlank() ? "(none)" : allowed);
 
         String raw;
@@ -102,21 +107,33 @@ public final class LlmAdvisoryService implements AdvisoryService {
             return deterministic;
         }
 
-        if (!isAcceptable(raw, allowed)) {
+        String source = (clause.text() + " " + deterministic.body() + " " + allowed).toLowerCase();
+        if (!isAcceptable(raw, allowed, deterministic.body(), source)) {
             log.debug("LLM output rejected by guardrail for clause {}", clause.id());
             return deterministic;
         }
         return new Advice(deterministic.headline(), raw, deterministic.citations());
     }
 
-    private static boolean isAcceptable(String text, String allowedSections) {
-        if (text.length() < 40 || text.length() > 1200) {
+    private static final Pattern NUMBER = Pattern.compile("\\d[\\d,./-]*");
+
+    static boolean isAcceptable(String text, String allowedSections, String deterministicBody,
+            String sourceLower) {
+        if (text.length() < 40 || text.length() > Math.max(700, deterministicBody.length() * 3 / 2 + 200)) {
             return false;
         }
-        Matcher m = SECTION_REF.matcher(text);
-        while (m.find()) {
-            if (!allowedSections.toLowerCase().contains(m.group().toLowerCase())) {
+        Matcher sec = SECTION_REF.matcher(text);
+        while (sec.find()) {
+            if (!allowedSections.toLowerCase().contains(sec.group().toLowerCase())) {
                 return false; // invented a section number
+            }
+        }
+        Matcher num = NUMBER.matcher(text);
+        while (num.find()) {
+            String digits = num.group().replaceAll("[^\\d]", "");
+            if (digits.length() >= 2 && !sourceLower.contains(num.group().toLowerCase())
+                    && !sourceLower.replaceAll("[^\\d]", " ").contains(digits)) {
+                return false; // invented a date, amount, address or period
             }
         }
         return true;
@@ -126,7 +143,7 @@ public final class LlmAdvisoryService implements AdvisoryService {
         StringBuilder sb = new StringBuilder();
         for (StatuteRef s : input.statutes()) {
             sb.append(s.act()).append(", ").append(s.provision()).append(": ")
-                    .append(s.snippet()).append('\n');
+                    .append(truncate(s.snippet(), STATUTE_NOTE_CHARS)).append('\n');
         }
         return sb.toString().strip();
     }

@@ -82,7 +82,49 @@ class AdvisoryServiceTest {
     }
 
     @Test
+    void llmGuardrailFallsBackWhenModelInventsSpecifics() {
+        LlmClient fabricator = stub("The parties are Acme Pvt Ltd of 221B Baker Street, PIN 400001, "
+                + "and the indemnity was signed on 14 March 2024. This is not legal advice.");
+        var risk = new RiskFlag(Severity.HIGH, "uncapped-indemnity", "Open-ended exposure.",
+                io.statigate.core.Citation.documentOnly(indemnity.span(), indemnity.text()));
+        List<Advice> advice = new LlmAdvisoryService(fabricator)
+                .adviseClause(new ClauseAdvisoryInput(indemnity, List.of(risk), List.of()));
+        assertTrue(advice.stream().noneMatch(a -> a.body().contains("400001")),
+                "invented address/PIN must be rejected");
+    }
+
+    @Test
+    void llmGuardrailAcceptsFaithfulRephrasing() {
+        LlmClient faithful = stub("This clause makes the Client cover the Service Provider's losses "
+                + "with no monetary cap, so exposure is open-ended. A cap is worth negotiating. "
+                + "This is not legal advice.");
+        var risk = new RiskFlag(Severity.HIGH, "uncapped-indemnity",
+                "This indemnity has no monetary cap, so exposure is open-ended.",
+                io.statigate.core.Citation.documentOnly(indemnity.span(), indemnity.text()));
+        List<Advice> advice = new LlmAdvisoryService(faithful)
+                .adviseClause(new ClauseAdvisoryInput(indemnity, List.of(risk), List.of()));
+        assertTrue(advice.stream().anyMatch(a -> a.body().contains("open-ended")),
+                "faithful rephrasing should pass the guardrail");
+    }
+
+    @Test
     void adviceRecordStillRejectsEmptyCitations() {
         assertThrows(IllegalArgumentException.class, () -> new Advice("h", "b", List.of()));
+    }
+
+    private static LlmClient stub(String reply) {
+        return new LlmClient() {
+            public String generate(String s, String u, int n) {
+                return reply;
+            }
+
+            public String modelId() {
+                return "stub";
+            }
+
+            public boolean inProcess() {
+                return true;
+            }
+        };
     }
 }

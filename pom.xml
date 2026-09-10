@@ -209,9 +209,11 @@
                     <artifactId>maven-surefire-plugin</artifactId>
                     <version>${surefire.plugin.version}</version>
                     <configuration>
-                        <!-- ONNX Runtime (and later JLama) call System.load; opt in to native access
-                             so the JDK 21+ warning does not clutter test output. -->
-                        <argLine>-Xshare:auto --enable-native-access=ALL-UNNAMED</argLine>
+                        <!-- ONNX Runtime and JLama call System.load and use the Vector API; opt in
+                             here so the JDK 21+ native-access warning does not clutter test output
+                             and the optional JLama tests can load. JLama's FFM path additionally
+                             needs preview mode, which the tester adds explicitly. -->
+                        <argLine>-Xshare:auto --enable-native-access=ALL-UNNAMED --add-modules jdk.incubator.vector</argLine>
                         <systemPropertyVariables>
                             <org.slf4j.simpleLogger.defaultLogLevel>warn</org.slf4j.simpleLogger.defaultLogLevel>
                         </systemPropertyVariables>
