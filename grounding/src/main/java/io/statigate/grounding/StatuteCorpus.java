@@ -52,13 +52,16 @@ public final class StatuteCorpus {
             }
             JsonNode root = new ObjectMapper().readTree(in);
             List<StatuteProvision> list = new ArrayList<>();
+            String defaultAuthority = root.path("authority").asText("https://www.indiacode.nic.in");
             for (JsonNode p : root.path("provisions")) {
                 list.add(new StatuteProvision(
                         p.path("corpus_id").asText(),
                         p.path("act").asText(),
                         p.path("provision").asText(),
                         p.path("heading").asText(),
-                        p.path("text").asText(),
+                        p.path("summary").asText(p.path("text").asText()),
+                        p.hasNonNull("bare_act") ? p.get("bare_act").asText() : null,
+                        p.path("authority").asText(defaultAuthority),
                         stringList(p.path("topics")),
                         stringList(p.path("clause_types"))));
             }

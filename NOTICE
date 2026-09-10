@@ -25,10 +25,13 @@ in this repository):
   model of the operator's choosing (e.g. Qwen2.5-Instruct, Apache-2.0). Not
   distributed here; fetched by scripts/download_jlama_model.py.
 
-The Indian statute corpus in grounding/src/main/resources/statutes/ consists of
-condensed editorial summaries authored for this project. Indian legislative
-text is not subject to copyright (Copyright Act, 1957, s.52(1)(q)); the
-summaries should be checked against the authoritative text on indiacode.nic.in.
+The Indian statute corpus in grounding/src/main/resources/statutes/ carries, for
+each provision, an authored plain-language summary (used for retrieval) and, for
+provisions whose wording is short and stable, the verbatim text as enacted.
+Indian legislative text is not subject to copyright (Copyright Act, 1957,
+s.52(1)(q)). Every entry links to the authoritative text on indiacode.nic.in and
+should be checked against it; provisions that have been amended carry a summary
+reflecting the current position rather than verbatim text.
 
 ------------------------------------------------------------------------------
 Third-party libraries (see each project for its license):

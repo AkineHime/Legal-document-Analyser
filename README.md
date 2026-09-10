@@ -27,7 +27,7 @@ on any JRE 21** and works on an air-gapped machine.
 | `nlp` | Pure-Java BERT WordPiece tokenizer and an ONNX Runtime **InLegalBERT** sentence encoder, shared across stages via `NlpRuntime`. |
 | `ingestion` | PDFBox per-page extraction with offset tracking, text normalisation, OpenNLP sentence splitting, clause segmentation. |
 | `extraction` | Clause classification (InLegalBERT nearest-centroid + keyword ensemble), rule-based entities, an explainable risk engine. Runs model-free if no model is present. |
-| `grounding` | A local corpus of Indian statute provisions + an in-process BM25 / embedding retriever with a clause-type prior. No database. |
+| `grounding` | A local corpus of ~38 Indian statute provisions (verbatim text where short and stable, summaries elsewhere, every entry linked to India Code) + an in-process BM25 / embedding retriever with a clause-type prior. No database. |
 | `advisory` | A deterministic template engine that cannot hallucinate is the default; an optional in-process LLM (JLama) rephrases within hard guardrails. |
 | `pipeline` | `AnalysisPipeline` — the four stages, one shared encoder, per-stage timings. |
 | `audit` | Counterfactual fairness check: the analysis must be invariant when only party names, gender and region are swapped. |

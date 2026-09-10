@@ -97,7 +97,11 @@ final class JsonReportWriter {
                 n.put("act", m.provision().act());
                 n.put("provision", m.provision().provision());
                 n.put("heading", m.provision().heading());
-                n.put("summary", m.provision().text());
+                n.put("summary", m.provision().summary());
+                if (m.provision().hasBareAct()) {
+                    n.put("bareAct", m.provision().bareAct());
+                }
+                n.put("authority", m.provision().authority());
                 n.put("score", m.score());
                 n.put("method", m.method());
             });

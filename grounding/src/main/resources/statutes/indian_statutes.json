@@ -1,31 +1,53 @@
 {
-  "_about": "Condensed, plain-language statements of Indian statutory provisions relevant to commercial contract review. Each 'text' is an editorial summary, NOT a verbatim quotation of the bare Act; 'provision' gives the citation to check against the authoritative text on indiacode.nic.in. Indian legislative text is not subject to copyright (Copyright Act, 1957 s.52(1)(q)).",
+  "_about": "Local corpus of Indian statutory provisions relevant to commercial-contract review. 'summary' is a plain-language editorial paraphrase (always present, drives retrieval). 'bare_act' is verbatim text as enacted, carried only for provisions whose wording is short and stable; where a provision has been amended or is lengthy it is omitted and the summary reflects the current position. Always verify against the authoritative text at the 'authority' URL. Indian legislative text is not subject to copyright (Copyright Act, 1957, s.52(1)(q)).",
+  "authority": "https://www.indiacode.nic.in",
   "provisions": [
     {
       "corpus_id": "ica-1872-s10",
       "act": "Indian Contract Act, 1872",
       "provision": "Section 10",
       "heading": "What agreements are contracts",
-      "text": "An agreement is a contract if it is made by the free consent of parties competent to contract, for a lawful consideration and with a lawful object, and is not expressly declared void. Certain contracts must also be in writing, registered or attested where other laws so require.",
-      "topics": ["formation", "free consent", "competency", "lawful object", "validity"],
+      "summary": "An agreement is a contract if it is made by the free consent of parties competent to contract, for a lawful consideration and with a lawful object, and is not expressly declared void. Laws requiring certain contracts to be in writing, attested, or registered are unaffected.",
+      "bare_act": "All agreements are contracts if they are made by the free consent of parties competent to contract, for a lawful consideration and with a lawful object, and are not hereby expressly declared to be void. Nothing herein contained shall affect any law in force in India, and not hereby expressly repealed, by which any contract is required to be made in writing or in the presence of witnesses, or any law relating to the registration of documents.",
+      "topics": ["formation", "free consent", "competency", "lawful object", "writing requirement"],
       "clause_types": ["ENTIRE_AGREEMENT", "AMENDMENT", "PREAMBLE", "PARTIES"]
+    },
+    {
+      "corpus_id": "ica-1872-s16",
+      "act": "Indian Contract Act, 1872",
+      "provision": "Section 16",
+      "heading": "'Undue influence' defined",
+      "summary": "A contract is induced by undue influence where one party is in a position to dominate the will of the other and uses that position to obtain an unfair advantage. A dominant position is presumed where one holds real or apparent authority over the other, stands in a fiduciary relation, or contracts with a person whose capacity is temporarily or permanently affected. Where such a party enters a transaction that appears unconscionable, the burden of proving it was not procured by undue influence lies on the dominant party.",
+      "topics": ["undue influence", "unconscionable bargain", "unequal bargaining power", "burden of proof"],
+      "clause_types": ["PARTIES", "PAYMENT", "LIMITATION_OF_LIABILITY", "TERMINATION"]
+    },
+    {
+      "corpus_id": "ica-1872-s19",
+      "act": "Indian Contract Act, 1872",
+      "provision": "Section 19",
+      "heading": "Voidability of agreements without free consent",
+      "summary": "Where consent to an agreement is caused by coercion, fraud or misrepresentation, the agreement is a contract voidable at the option of the party whose consent was so caused. That party may instead insist that the contract be performed and that it be put in the position it would have occupied had the representations been true. A misrepresentation or fraud that did not in fact cause the consent does not make the contract voidable.",
+      "topics": ["fraud", "misrepresentation", "coercion", "voidable contract", "free consent"],
+      "clause_types": ["WARRANTY", "ENTIRE_AGREEMENT", "PARTIES"]
     },
     {
       "corpus_id": "ica-1872-s23",
       "act": "Indian Contract Act, 1872",
       "provision": "Section 23",
-      "heading": "What consideration and objects are lawful, and what not",
-      "text": "The consideration or object of an agreement is unlawful if it is forbidden by law, would defeat the provisions of any law, is fraudulent, involves injury to person or property, or is regarded by the court as immoral or opposed to public policy. An agreement with an unlawful object or consideration is void.",
-      "topics": ["public policy", "illegality", "void agreement", "unlawful object"],
-      "clause_types": ["INDEMNITY", "NON_COMPETE", "GOVERNING_LAW"]
+      "heading": "What considerations and objects are lawful, and what not",
+      "summary": "The consideration or object of an agreement is unlawful if it is forbidden by law, would defeat the provisions of any law, is fraudulent, involves injury to the person or property of another, or is regarded by the Court as immoral or opposed to public policy. Every agreement whose object or consideration is unlawful is void.",
+      "bare_act": "The consideration or object of an agreement is lawful, unless it is forbidden by law; or is of such a nature that, if permitted, it would defeat the provisions of any law; or is fraudulent; or involves or implies injury to the person or property of another; or the Court regards it as immoral, or opposed to public policy. In each of these cases, the consideration or object of an agreement is said to be unlawful. Every agreement of which the object or consideration is unlawful is void.",
+      "topics": ["public policy", "illegality", "void agreement", "unlawful object", "forbidden by law"],
+      "clause_types": ["INDEMNITY", "NON_COMPETE", "GOVERNING_LAW", "PAYMENT"]
     },
     {
       "corpus_id": "ica-1872-s27",
       "act": "Indian Contract Act, 1872",
       "provision": "Section 27",
       "heading": "Agreement in restraint of trade, void",
-      "text": "Every agreement by which anyone is restrained from exercising a lawful profession, trade or business of any kind is, to that extent, void. The only statutory exception is a restraint accepted by the seller of the goodwill of a business, within reasonable local limits, while a like business is carried on by the buyer. Indian courts generally do not enforce post-employment non-compete restrictions.",
-      "topics": ["restraint of trade", "non-compete", "non-solicitation", "employment", "void"],
+      "summary": "Every agreement that restrains a person from exercising a lawful profession, trade or business of any kind is void to that extent. The only statutory exception is a restraint accepted by the seller of the goodwill of a business, within reasonable local limits, while the buyer carries on a like business. Indian courts, unlike English courts, do not apply a general reasonableness test and routinely refuse to enforce post-employment non-compete covenants.",
+      "bare_act": "Every agreement by which any one is restrained from exercising a lawful profession, trade or business of any kind, is to that extent void. Exception 1.-Saving of agreement not to carry on business of which goodwill is sold.-One who sells the goodwill of a business may agree with the buyer to refrain from carrying on a similar business, within specified local limits, so long as the buyer, or any person deriving title to the goodwill from him, carries on a like business therein, provided that such limits appear to the Court reasonable, regard being had to the nature of the business.",
+      "topics": ["restraint of trade", "non-compete", "non-solicitation", "employment", "goodwill", "void"],
       "clause_types": ["NON_COMPETE", "NON_SOLICITATION"]
     },
     {
@@ -33,17 +55,45 @@
       "act": "Indian Contract Act, 1872",
       "provision": "Section 28",
       "heading": "Agreements in restraint of legal proceedings, void",
-      "text": "An agreement that absolutely restricts a party from enforcing its rights through the ordinary tribunals, or that limits the time within which rights may be enforced to less than the statutory limitation period, is void to that extent. A clause that extinguishes a right or discharges a liability on expiry of a specified period is also void. Bona fide arbitration agreements are expressly saved.",
-      "topics": ["restraint of legal proceedings", "limitation", "time bar", "arbitration saving", "jurisdiction"],
-      "clause_types": ["DISPUTE_RESOLUTION", "JURISDICTION", "ARBITRATION", "LIMITATION_OF_LIABILITY"]
+      "summary": "As amended (1997 and 2013), an agreement is void to the extent that it absolutely restricts a party from enforcing its rights through the ordinary tribunals, or limits the time within which rights may be enforced, or extinguishes a right or discharges a liability merely on the expiry of a specified period. Bona fide references to arbitration are expressly saved, as are guarantees given by banks and financial institutions.",
+      "topics": ["restraint of legal proceedings", "limitation", "time bar", "arbitration saving", "jurisdiction", "extinguishment of rights"],
+      "clause_types": ["DISPUTE_RESOLUTION", "JURISDICTION", "ARBITRATION", "LIMITATION_OF_LIABILITY", "NOTICES"]
+    },
+    {
+      "corpus_id": "ica-1872-s56",
+      "act": "Indian Contract Act, 1872",
+      "provision": "Section 56",
+      "heading": "Agreement to do impossible act; contract to do act afterwards becoming impossible or unlawful",
+      "summary": "An agreement to do an act impossible in itself is void. A contract to do an act which, after the contract is made, becomes impossible or unlawful by reason of some event the promisor could not prevent, becomes void when the act becomes impossible or unlawful. This is the statutory basis of the doctrine of frustration in India; a mere rise in cost or difficulty does not frustrate a contract.",
+      "topics": ["frustration", "impossibility", "supervening event", "force majeure", "discharge"],
+      "clause_types": ["FORCE_MAJEURE", "TERMINATION", "SCOPE_OF_WORK"]
+    },
+    {
+      "corpus_id": "ica-1872-s62",
+      "act": "Indian Contract Act, 1872",
+      "provision": "Section 62",
+      "heading": "Effect of novation, rescission, and alteration of contract",
+      "summary": "If the parties to a contract agree to substitute a new contract for it, or to rescind or alter it, the original contract need not be performed. Any variation to a contract must itself be supported by the agreement of the parties.",
+      "topics": ["novation", "variation", "amendment", "rescission", "substituted agreement"],
+      "clause_types": ["AMENDMENT", "ENTIRE_AGREEMENT", "ASSIGNMENT"]
+    },
+    {
+      "corpus_id": "ica-1872-s65",
+      "act": "Indian Contract Act, 1872",
+      "provision": "Section 65",
+      "heading": "Obligation of person who has received advantage under void agreement, or contract that becomes void",
+      "summary": "When an agreement is discovered to be void, or a contract becomes void, any person who has received an advantage under it is bound to restore it, or to compensate the person from whom it was received.",
+      "topics": ["restitution", "void agreement", "unjust enrichment", "restoration"],
+      "clause_types": ["TERMINATION", "PAYMENT"]
     },
     {
       "corpus_id": "ica-1872-s73",
       "act": "Indian Contract Act, 1872",
       "provision": "Section 73",
       "heading": "Compensation for loss or damage caused by breach of contract",
-      "text": "On breach, the injured party is entitled to compensation for loss or damage that naturally arose in the usual course of things from the breach, or that the parties knew when contracting to be likely to result. Remote or indirect loss is not compensable. The claimant must also take reasonable steps to mitigate its loss.",
-      "topics": ["damages", "compensation", "remoteness", "mitigation", "breach"],
+      "summary": "On breach, the injured party may recover compensation for loss or damage that naturally arose in the usual course of things from the breach, or which the parties knew when contracting to be likely to result. No compensation is given for remote or indirect loss, and the claimant must take reasonable steps to mitigate.",
+      "bare_act": "When a contract has been broken, the party who suffers by such breach is entitled to receive, from the party who has broken the contract, compensation for any loss or damage caused to him thereby, which naturally arose in the usual course of things from such breach, or which the parties knew, when they made the contract, to be likely to result from the breach of it. Such compensation is not to be given for any remote and indirect loss or damage sustained by reason of the breach. When an obligation resembling those created by contract has been incurred and has not been discharged, any person injured by the failure to discharge it is entitled to receive the same compensation from the party in default, as if such person had contracted to discharge it and had broken his contract. Explanation.-In estimating the loss or damage arising from a breach of contract, the means which existed of remedying the inconvenience caused by the non-performance of the contract must be taken into account.",
+      "topics": ["damages", "compensation", "remoteness", "mitigation", "consequential loss", "breach"],
       "clause_types": ["LIMITATION_OF_LIABILITY", "INDEMNITY", "TERMINATION", "WARRANTY"]
     },
     {
@@ -51,17 +101,19 @@
       "act": "Indian Contract Act, 1872",
       "provision": "Section 74",
       "heading": "Compensation for breach of contract where penalty stipulated for",
-      "text": "Where a sum is named in the contract as payable on breach, or the contract contains any other stipulation by way of penalty, the injured party is entitled to reasonable compensation not exceeding that sum, whether or not actual loss is proved. Courts relieve against amounts that are penal rather than a genuine pre-estimate of loss; this is often applied to liquidated damages and to high default-interest rates.",
-      "topics": ["penalty", "liquidated damages", "default interest", "reasonable compensation"],
+      "summary": "Where a sum is named in the contract as payable on breach, or the contract contains any other stipulation by way of penalty, the injured party may receive reasonable compensation not exceeding that sum, whether or not actual loss is proved. Courts relieve against amounts that are penal rather than a genuine pre-estimate of loss; this is regularly applied to liquidated-damages clauses and to high default-interest rates.",
+      "bare_act": "When a contract has been broken, if a sum is named in the contract as the amount to be paid in case of such breach, or if the contract contains any other stipulation by way of penalty, the party complaining of the breach is entitled, whether or not actual damage or loss is proved to have been caused thereby, to receive from the party who has broken the contract reasonable compensation not exceeding the amount so named or, as the case may be, the penalty stipulated for. Explanation.-A stipulation for increased interest from the date of default may be a stipulation by way of penalty.",
+      "topics": ["penalty", "liquidated damages", "default interest", "reasonable compensation", "pre-estimate of loss"],
       "clause_types": ["PAYMENT", "LIMITATION_OF_LIABILITY", "TERMINATION"]
     },
     {
       "corpus_id": "ica-1872-s124",
       "act": "Indian Contract Act, 1872",
       "provision": "Section 124",
-      "heading": "Contract of indemnity defined",
-      "text": "A contract of indemnity is one by which one party promises to save the other from loss caused to the other by the conduct of the promisor or of any other person. Indian statute defines indemnity narrowly around loss caused by human conduct; wider indemnities (including against loss from events) are given effect as ordinary contractual promises.",
-      "topics": ["indemnity", "definition", "loss"],
+      "heading": "'Contract of indemnity' defined",
+      "summary": "A contract of indemnity is one by which one party promises to save the other from loss caused to him by the conduct of the promisor himself or of any other person. The statutory definition is confined to loss caused by human conduct; wider indemnities (for example against loss from events) are enforced as ordinary contractual promises.",
+      "bare_act": "A contract by which one party promises to save the other from loss caused to him by the conduct of the promisor himself, or by the conduct of any other person, is called a \"contract of indemnity\".",
+      "topics": ["indemnity", "definition", "loss", "hold harmless"],
       "clause_types": ["INDEMNITY"]
     },
     {
@@ -69,8 +121,9 @@
       "act": "Indian Contract Act, 1872",
       "provision": "Section 125",
       "heading": "Rights of indemnity-holder when sued",
-      "text": "An indemnity-holder acting within the scope of its authority is entitled to recover from the indemnifier all damages, costs and sums paid under any compromise of a suit in respect of a matter covered by the indemnity, provided the holder acted prudently and with authority.",
-      "topics": ["indemnity", "defence costs", "settlement", "recovery"],
+      "summary": "An indemnity-holder acting within the scope of his authority may recover from the indemnifier all damages he is compelled to pay in a covered suit, all costs he is compelled to pay if he acted prudently and did not contravene the indemnifier's orders, and all sums paid under a compromise that was prudent and not contrary to the indemnifier's orders.",
+      "bare_act": "The promisee in a contract of indemnity, acting within the scope of his authority, is entitled to recover from the promisor- (1) all damages which he may be compelled to pay in any suit in respect of any matter to which the promise to indemnify applies; (2) all costs which he may be compelled to pay in any such suit if, in bringing or defending it, he did not contravene the orders of the promisor, and acted as it would have been prudent for him to act in the absence of any contract of indemnity, or if the promisor authorized him to bring or defend the suit; (3) all sums which he may have paid under the terms of any compromise of any such suit, if the compromise was not contrary to the orders of the promisor, and was one which it would have been prudent for the promisee to make in the absence of any contract of indemnity, or if the promisor authorized him to compromise the suit.",
+      "topics": ["indemnity", "defence costs", "settlement", "recovery", "damages"],
       "clause_types": ["INDEMNITY"]
     },
     {
@@ -78,8 +131,9 @@
       "act": "Arbitration and Conciliation Act, 1996",
       "provision": "Section 7",
       "heading": "Arbitration agreement",
-      "text": "An arbitration agreement is an agreement to submit to arbitration present or future disputes arising out of a defined legal relationship. It must be in writing, which includes a signed document, an exchange of communications recording the agreement, or an exchange of pleadings in which its existence is alleged and not denied. A reference in a contract to a document containing an arbitration clause incorporates that clause if the reference makes it part of the contract.",
-      "topics": ["arbitration agreement", "writing requirement", "incorporation by reference"],
+      "summary": "An arbitration agreement is an agreement to submit to arbitration present or future disputes in respect of a defined legal relationship, whether contractual or not. It must be in writing - satisfied by a signed document, an exchange of communications (including electronic) recording it, or an exchange of pleadings in which its existence is alleged and not denied. A reference in a written contract to a document containing an arbitration clause incorporates that clause if the reference makes it part of the contract.",
+      "bare_act": "(1) In this Part, \"arbitration agreement\" means an agreement by the parties to submit to arbitration all or certain disputes which have arisen or which may arise between them in respect of a defined legal relationship, whether contractual or not. (2) An arbitration agreement may be in the form of an arbitration clause in a contract or in the form of a separate agreement. (3) An arbitration agreement shall be in writing. (4) An arbitration agreement is in writing if it is contained in- (a) a document signed by the parties; (b) an exchange of letters, telex, telegrams or other means of telecommunication including communication through electronic means which provide a record of the agreement; or (c) an exchange of statements of claim and defence in which the existence of the agreement is alleged by one party and not denied by the other. (5) The reference in a contract to a document containing an arbitration clause constitutes an arbitration agreement if the contract is in writing and the reference is such as to make that arbitration clause part of the contract.",
+      "topics": ["arbitration agreement", "writing requirement", "incorporation by reference", "separability"],
       "clause_types": ["ARBITRATION", "DISPUTE_RESOLUTION"]
     },
     {
@@ -87,16 +141,26 @@
       "act": "Arbitration and Conciliation Act, 1996",
       "provision": "Section 11",
       "heading": "Appointment of arbitrators",
-      "text": "Parties are free to agree a procedure for appointing the arbitral tribunal. Failing agreement or cooperation, a party may apply to the Supreme Court (international commercial arbitration) or the High Court (other cases), or their designated institution, to make the appointment. The court confines its examination to the existence of an arbitration agreement.",
-      "topics": ["appointment", "arbitral tribunal", "default procedure", "court assistance"],
+      "summary": "Parties are free to agree a procedure for appointing the arbitral tribunal. Failing agreement or cooperation, a party may apply to the Supreme Court (international commercial arbitration) or the High Court (other cases), or an institution they designate, to make the appointment. The court or institution confines its examination to the existence of an arbitration agreement.",
+      "topics": ["appointment", "arbitral tribunal", "default procedure", "court assistance", "referral"],
       "clause_types": ["ARBITRATION"]
+    },
+    {
+      "corpus_id": "aca-1996-s16",
+      "act": "Arbitration and Conciliation Act, 1996",
+      "provision": "Section 16",
+      "heading": "Competence of arbitral tribunal to rule on its jurisdiction",
+      "summary": "The arbitral tribunal may rule on its own jurisdiction, including on objections to the existence or validity of the arbitration agreement. An arbitration clause is treated as an agreement independent of the rest of the contract, so a decision that the contract is void does not by itself invalidate the arbitration clause. A jurisdiction objection must be raised no later than the submission of the statement of defence.",
+      "topics": ["competence-competence", "separability", "jurisdiction objection", "kompetenz-kompetenz"],
+      "clause_types": ["ARBITRATION", "DISPUTE_RESOLUTION"]
     },
     {
       "corpus_id": "aca-1996-s20",
       "act": "Arbitration and Conciliation Act, 1996",
       "provision": "Section 20",
       "heading": "Place of arbitration",
-      "text": "The parties are free to agree on the place (seat) of arbitration. Failing agreement, the tribunal determines it having regard to the circumstances and the parties' convenience. The tribunal may meet at any place it considers appropriate for hearings or deliberations. The seat fixes which courts exercise supervisory jurisdiction over the arbitration.",
+      "summary": "The parties are free to agree on the place (seat) of arbitration. Failing agreement, the tribunal fixes it having regard to the circumstances and the parties' convenience. The tribunal may meet at any place it considers appropriate for hearings or deliberations. The seat fixes which courts exercise supervisory jurisdiction over the arbitration.",
+      "bare_act": "(1) The parties are free to agree on the place of arbitration. (2) Failing any agreement referred to in sub-section (1), the place of arbitration shall be determined by the arbitral tribunal having regard to the circumstances of the case, including the convenience of the parties. (3) Notwithstanding sub-section (1) or sub-section (2), the arbitral tribunal may, unless otherwise agreed by the parties, meet at any place it considers appropriate for consultation among its members, for hearing witnesses, experts or the parties, or for inspection of documents, goods or other property.",
       "topics": ["seat", "venue", "place of arbitration", "supervisory jurisdiction", "convenience"],
       "clause_types": ["ARBITRATION", "JURISDICTION"]
     },
@@ -105,26 +169,62 @@
       "act": "Arbitration and Conciliation Act, 1996",
       "provision": "Section 28",
       "heading": "Rules applicable to substance of dispute",
-      "text": "In an arbitration seated in India other than an international commercial arbitration, the tribunal decides the dispute according to the substantive law of India. In international commercial arbitration the tribunal applies the law designated by the parties. In all cases the tribunal decides in accordance with the contract terms and takes trade usages into account.",
+      "summary": "In an arbitration seated in India other than an international commercial arbitration, the tribunal decides the dispute according to the substantive law of India. In international commercial arbitration the tribunal applies the law designated by the parties. In all cases the tribunal decides in accordance with the terms of the contract and takes trade usages into account.",
       "topics": ["governing law", "substantive law", "choice of law", "trade usage"],
       "clause_types": ["GOVERNING_LAW", "ARBITRATION"]
+    },
+    {
+      "corpus_id": "aca-1996-s29a",
+      "act": "Arbitration and Conciliation Act, 1996",
+      "provision": "Section 29A",
+      "heading": "Time limit for arbitral award",
+      "summary": "In matters other than international commercial arbitration, the award must be made within twelve months from completion of pleadings, extendable by six months by consent. Beyond that, only a court may extend time, and it may reduce the arbitrators' fees for delay attributable to the tribunal or impose conditions. This caps how long a domestic arbitration can run.",
+      "topics": ["time limit", "award timeline", "delay", "extension", "expedited"],
+      "clause_types": ["ARBITRATION", "DISPUTE_RESOLUTION"]
     },
     {
       "corpus_id": "aca-1996-s34",
       "act": "Arbitration and Conciliation Act, 1996",
       "provision": "Section 34",
       "heading": "Application for setting aside arbitral award",
-      "text": "Recourse against a domestic award is limited to an application to set it aside on narrow grounds: incapacity, an invalid arbitration agreement, lack of proper notice, the award exceeding the scope of submission, improper composition of the tribunal, non-arbitrability, or conflict with the public policy of India (including fraud, or patent illegality for purely domestic awards). The application must generally be made within three months.",
-      "topics": ["set aside award", "challenge", "public policy", "limitation period"],
+      "summary": "Recourse against a domestic award is limited to an application to set it aside on narrow grounds: incapacity, an invalid arbitration agreement, lack of proper notice, the award going beyond the scope of submission, improper composition of the tribunal, non-arbitrability, or conflict with the public policy of India (fraud, or patent illegality for purely domestic awards). The application must generally be made within three months.",
+      "topics": ["set aside award", "challenge", "public policy", "patent illegality", "limitation period"],
       "clause_types": ["ARBITRATION", "DISPUTE_RESOLUTION"]
+    },
+    {
+      "corpus_id": "aca-1996-s36",
+      "act": "Arbitration and Conciliation Act, 1996",
+      "provision": "Section 36",
+      "heading": "Enforcement of arbitral award",
+      "summary": "Where the time to challenge an award has expired, or a challenge has been refused, the award is enforced in the same manner as a decree of the court. Filing a set-aside application does not by itself stay enforcement; the court may grant a stay on terms, and will ordinarily require security where the challenge alleges fraud or corruption in the making of the award.",
+      "topics": ["enforcement", "decree", "stay of award", "execution", "security"],
+      "clause_types": ["ARBITRATION", "DISPUTE_RESOLUTION"]
+    },
+    {
+      "corpus_id": "aca-1996-s37",
+      "act": "Arbitration and Conciliation Act, 1996",
+      "provision": "Section 37",
+      "heading": "Appealable orders",
+      "summary": "Appeals lie only from a specified, limited set of orders: refusing to refer parties to arbitration under section 8, granting or refusing an interim measure under section 9 or section 17, and setting aside or refusing to set aside an award under section 34. No second appeal lies, though the right to appeal to the Supreme Court is preserved.",
+      "topics": ["appeal", "limited appeal", "interim measures", "finality"],
+      "clause_types": ["ARBITRATION", "DISPUTE_RESOLUTION"]
+    },
+    {
+      "corpus_id": "sra-1963-s10",
+      "act": "Specific Relief Act, 1963",
+      "provision": "Section 10",
+      "heading": "Specific performance of contract",
+      "summary": "Since the 2018 amendment, specific performance of a contract is enforceable by the court as a matter of course, subject only to the bars in sections 11(2), 14 and 16. It is no longer a discretionary remedy granted only where damages are inadequate.",
+      "topics": ["specific performance", "remedy", "enforceable as of right", "2018 amendment"],
+      "clause_types": ["SCOPE_OF_WORK", "TERMINATION", "PAYMENT"]
     },
     {
       "corpus_id": "sra-1963-s14",
       "act": "Specific Relief Act, 1963",
       "provision": "Section 14",
       "heading": "Contracts not specifically enforceable",
-      "text": "Certain contracts cannot be specifically enforced, including those where compensation in money is an adequate relief, contracts that run into minute or numerous details or depend on the personal qualifications of a party, contracts of a determinable nature, and contracts involving continuous duties the court cannot supervise. Following the 2018 amendment, specific performance is otherwise the norm rather than a discretionary exception.",
-      "topics": ["specific performance", "personal service", "determinable contract", "remedy"],
+      "summary": "As substituted in 2018, the following cannot be specifically enforced: a contract where a party has obtained substituted performance under section 20; a contract involving continuous duties the court cannot supervise; a contract so dependent on the personal qualifications of a party that the court cannot enforce specific performance of its material terms; and a contract of a determinable nature.",
+      "topics": ["specific performance", "personal service", "determinable contract", "continuous supervision", "remedy"],
       "clause_types": ["TERMINATION", "SCOPE_OF_WORK", "WARRANTY"]
     },
     {
@@ -132,34 +232,52 @@
       "act": "Specific Relief Act, 1963",
       "provision": "Section 41",
       "heading": "Injunction when refused",
-      "text": "An injunction cannot be granted to restrain a person from prosecuting proceedings (except to prevent a multiplicity of proceedings), to restrain proceedings in a court not subordinate to that from which the injunction is sought, to prevent a breach of contract the performance of which could not be specifically enforced, or where the applicant has no personal interest in the matter.",
-      "topics": ["injunction", "restraint", "specific performance link", "equitable relief"],
+      "summary": "An injunction cannot be granted to restrain a person from prosecuting a pending proceeding (except to prevent a multiplicity of proceedings), to restrain proceedings in a court not subordinate to the one from which the injunction is sought, to prevent the breach of a contract that could not be specifically enforced, or where the applicant has no personal interest in the matter, among other bars.",
+      "topics": ["injunction", "restraint", "specific performance link", "equitable relief", "anti-suit"],
       "clause_types": ["NON_COMPETE", "CONFIDENTIALITY", "NON_SOLICITATION"]
+    },
+    {
+      "corpus_id": "sra-1963-s42",
+      "act": "Specific Relief Act, 1963",
+      "provision": "Section 42",
+      "heading": "Injunction to perform negative agreement",
+      "summary": "Where a contract contains an affirmative promise to do a certain act coupled with a negative promise not to do a certain act, the court may grant an injunction to enforce the negative promise even if it cannot compel specific performance of the affirmative promise, provided the applicant has not failed to perform the contract so far as it is binding on him. This is how negative covenants during the term of a contract are enforced.",
+      "topics": ["negative covenant", "injunction", "exclusivity", "non-compete during term"],
+      "clause_types": ["NON_COMPETE", "NON_SOLICITATION", "CONFIDENTIALITY", "INTELLECTUAL_PROPERTY"]
     },
     {
       "corpus_id": "cpa-2019-s2-46",
       "act": "Consumer Protection Act, 2019",
       "provision": "Section 2(46) and Section 49(2)",
       "heading": "Unfair contract; power to declare terms void",
-      "text": "An 'unfair contract' is one between a manufacturer or trader or service provider and a consumer that causes significant change in consumer rights, including by requiring excessive security deposits, imposing a disproportionate penalty for breach, refusing to accept early repayment, allowing unilateral termination without cause, permitting assignment to the consumer's detriment, or imposing unreasonable charges or conditions. The State Commission and National Commission may declare such terms null and void.",
-      "topics": ["unfair contract terms", "consumer", "penalty", "unilateral termination", "standard form"],
+      "summary": "An 'unfair contract' is a contract between a manufacturer, trader or service provider and a consumer that causes a significant change in consumer rights, including by requiring excessive security deposits, imposing a disproportionate penalty for breach, refusing early repayment, permitting unilateral termination without cause, permitting assignment to the consumer's detriment, or imposing unreasonable charges or conditions. The State Commission and National Commission may declare such terms null and void.",
+      "topics": ["unfair contract terms", "consumer", "penalty", "unilateral termination", "standard form", "void terms"],
       "clause_types": ["TERMINATION", "PAYMENT", "ASSIGNMENT", "LIMITATION_OF_LIABILITY", "RENEWAL"]
     },
     {
       "corpus_id": "isa-1899-s17",
       "act": "Indian Stamp Act, 1899",
       "provision": "Section 17",
-      "heading": "Instruments executed in India to be stamped before or at execution",
-      "text": "An instrument chargeable with duty and executed in India must be stamped before or at the time of execution. Stamp duty is a State subject, so the rate and mode (physical or e-stamp) depend on the State where the instrument is executed or the property is situated.",
-      "topics": ["stamp duty", "execution", "state law", "e-stamping"],
-      "clause_types": ["PREAMBLE", "ENTIRE_AGREEMENT", "AMENDMENT", "PARTIES"]
+      "heading": "Instruments executed in India to be stamped before or at the time of execution",
+      "summary": "An instrument chargeable with duty and executed by any person in India must be stamped before or at the time of execution. Stamp duty is a State subject, so the applicable rate and the mode (physical stamp paper, franking or e-stamp) depend on the State where the instrument is executed or where the property is situated.",
+      "topics": ["stamp duty", "execution", "state law", "e-stamping", "chargeable instrument"],
+      "clause_types": ["PREAMBLE", "ENTIRE_AGREEMENT", "AMENDMENT"]
+    },
+    {
+      "corpus_id": "isa-1899-s33",
+      "act": "Indian Stamp Act, 1899",
+      "provision": "Section 33",
+      "heading": "Examination and impounding of instruments",
+      "summary": "Every person authorised to receive evidence, and every public officer, before whom an instrument chargeable with duty is produced must examine it and, if it appears not to be duly stamped, must impound it. The instrument can then be validated only on payment of the deficient duty and a penalty, after which it may be admitted and acted upon.",
+      "topics": ["impounding", "insufficient stamp", "penalty", "validation", "admissibility"],
+      "clause_types": ["ARBITRATION", "ENTIRE_AGREEMENT", "DISPUTE_RESOLUTION"]
     },
     {
       "corpus_id": "isa-1899-s35",
       "act": "Indian Stamp Act, 1899",
       "provision": "Section 35",
       "heading": "Instruments not duly stamped inadmissible in evidence",
-      "text": "An instrument that is not duly stamped cannot be admitted in evidence, acted upon, or registered, unless the deficient duty and a penalty are paid to have it validated. An unstamped or under-stamped arbitration agreement or contract can therefore stall enforcement until it is impounded and regularised.",
+      "summary": "An instrument that is not duly stamped cannot be admitted in evidence for any purpose, acted upon, or registered, unless the deficient duty and a penalty are paid to have it validated. An unstamped or under-stamped contract or arbitration agreement can therefore stall enforcement until it is impounded and regularised.",
       "topics": ["admissibility", "evidence", "insufficient stamp", "penalty", "enforcement risk"],
       "clause_types": ["ARBITRATION", "DISPUTE_RESOLUTION", "ENTIRE_AGREEMENT"]
     },
@@ -168,26 +286,44 @@
       "act": "Registration Act, 1908",
       "provision": "Section 17",
       "heading": "Documents of which registration is compulsory",
-      "text": "Registration is compulsory for instruments that create, declare, assign, limit or extinguish any right, title or interest in immovable property worth one hundred rupees or more, and for leases of immovable property from year to year or for a term exceeding one year. An unregistered document that requires registration cannot affect the immovable property or be received as evidence of the transaction, though it may be used for limited collateral purposes.",
-      "topics": ["registration", "immovable property", "lease", "assignment", "evidence"],
+      "summary": "Registration is compulsory for non-testamentary instruments that create, declare, assign, limit or extinguish any right, title or interest in immovable property worth one hundred rupees or more, and for leases of immovable property from year to year or for any term exceeding one year or reserving a yearly rent.",
+      "topics": ["registration", "immovable property", "lease", "assignment", "compulsory registration"],
       "clause_types": ["ASSIGNMENT", "INTELLECTUAL_PROPERTY", "ENTIRE_AGREEMENT"]
+    },
+    {
+      "corpus_id": "ra-1908-s49",
+      "act": "Registration Act, 1908",
+      "provision": "Section 49",
+      "heading": "Effect of non-registration of documents required to be registered",
+      "summary": "A document that is required to be registered but is not registered cannot affect any immovable property comprised in it, cannot confer any power to adopt, and cannot be received as evidence of any transaction affecting such property or conferring such power. It may, however, be received as evidence of a collateral transaction not required to be effected by a registered instrument, and in a suit for specific performance.",
+      "topics": ["non-registration", "inadmissible", "immovable property", "collateral purpose", "evidence"],
+      "clause_types": ["ASSIGNMENT", "ENTIRE_AGREEMENT", "INTELLECTUAL_PROPERTY"]
     },
     {
       "corpus_id": "ita-2000-s10a",
       "act": "Information Technology Act, 2000",
       "provision": "Section 10A",
       "heading": "Validity of contracts formed through electronic means",
-      "text": "Where a contract is formed by communication of proposals, acceptances and revocations in electronic form or by electronic records, the contract is not unenforceable merely because electronic means were used. This supports click-wrap and email execution, subject to the Stamp Act and any law requiring a specific form.",
-      "topics": ["electronic contract", "click-wrap", "e-signature", "enforceability"],
+      "summary": "Where in a contract formation the communication of proposals, the acceptance of proposals, the revocation of proposals and acceptances is expressed in electronic form or by means of an electronic record, the contract is not unenforceable solely on the ground that electronic means were used. This supports click-wrap, browse-wrap and email execution, subject to stamp duty and any law requiring a specific form.",
+      "topics": ["electronic contract", "click-wrap", "e-record", "enforceability", "formation"],
       "clause_types": ["ENTIRE_AGREEMENT", "AMENDMENT", "NOTICES"]
+    },
+    {
+      "corpus_id": "ita-2000-s5",
+      "act": "Information Technology Act, 2000",
+      "provision": "Section 5",
+      "heading": "Legal recognition of electronic signatures",
+      "summary": "Where any law requires information or a matter to be authenticated by affixing a signature, that requirement is satisfied if the information or matter is authenticated by means of an electronic signature affixed in the manner prescribed. Certain instruments (for example negotiable instruments other than cheques, powers of attorney, trusts, wills and contracts for the sale or conveyance of immovable property) are excluded by the First Schedule.",
+      "topics": ["electronic signature", "authentication", "excluded documents", "digital signature"],
+      "clause_types": ["ENTIRE_AGREEMENT", "AMENDMENT", "PARTIES"]
     },
     {
       "corpus_id": "dpdpa-2023-s4",
       "act": "Digital Personal Data Protection Act, 2023",
       "provision": "Section 4",
       "heading": "Grounds for processing personal data",
-      "text": "Personal data may be processed only for a lawful purpose for which the data principal has given consent, or for certain 'legitimate uses' specified in the Act. Processing must be tied to the stated purpose.",
-      "topics": ["personal data", "lawful purpose", "consent", "legitimate use"],
+      "summary": "Personal data may be processed only for a lawful purpose for which the data principal has given consent, or for certain 'legitimate uses' specified in the Act. Processing must be tied to the stated purpose.",
+      "topics": ["personal data", "lawful purpose", "consent", "legitimate use", "purpose limitation"],
       "clause_types": ["DATA_PROTECTION", "CONFIDENTIALITY"]
     },
     {
@@ -195,8 +331,8 @@
       "act": "Digital Personal Data Protection Act, 2023",
       "provision": "Section 6",
       "heading": "Consent",
-      "text": "Consent must be free, specific, informed, unconditional and unambiguous, given by a clear affirmative action, and limited to the personal data necessary for the specified purpose. The data principal may withdraw consent at any time with consequences borne by the principal, and the request for consent must be accompanied by a plain-language notice.",
-      "topics": ["consent", "withdrawal", "notice", "data minimisation"],
+      "summary": "Consent must be free, specific, informed, unconditional and unambiguous, given by a clear affirmative action, and limited to the personal data necessary for the specified purpose. It must be preceded by a plain-language notice, may be given or withdrawn through a Consent Manager, and may be withdrawn at any time with the consequences of withdrawal borne by the data principal.",
+      "topics": ["consent", "withdrawal", "notice", "data minimisation", "consent manager"],
       "clause_types": ["DATA_PROTECTION"]
     },
     {
@@ -204,9 +340,18 @@
       "act": "Digital Personal Data Protection Act, 2023",
       "provision": "Section 8",
       "heading": "General obligations of Data Fiduciary",
-      "text": "A data fiduciary is responsible for compliance even when processing is done by a data processor engaged under a valid contract. It must maintain accuracy, implement reasonable security safeguards, notify the Board and affected principals of a personal data breach, and erase personal data on withdrawal of consent or when the purpose is no longer served.",
-      "topics": ["data fiduciary", "data processor", "security safeguards", "breach notification", "erasure"],
+      "summary": "A data fiduciary remains responsible for compliance even where processing is carried out by a data processor engaged under a valid contract. It must ensure the accuracy and completeness of data used to make decisions or disclosed to another fiduciary, implement appropriate technical and organisational measures and reasonable security safeguards, notify the Board and affected data principals of a personal data breach, and erase personal data on withdrawal of consent or when the purpose is no longer being served.",
+      "topics": ["data fiduciary", "data processor", "security safeguards", "breach notification", "erasure", "accountability"],
       "clause_types": ["DATA_PROTECTION", "CONFIDENTIALITY", "INDEMNITY"]
+    },
+    {
+      "corpus_id": "dpdpa-2023-s9",
+      "act": "Digital Personal Data Protection Act, 2023",
+      "provision": "Section 9",
+      "heading": "Processing of personal data of children",
+      "summary": "Before processing the personal data of a child (under 18) or a person with a lawful guardian, the data fiduciary must obtain verifiable consent of the parent or guardian. It must not undertake processing likely to cause detriment to a child, nor carry out tracking, behavioural monitoring, or targeted advertising directed at children.",
+      "topics": ["children's data", "parental consent", "behavioural monitoring", "targeted advertising", "verifiable consent"],
+      "clause_types": ["DATA_PROTECTION"]
     }
   ]
 }

@@ -25,8 +25,10 @@ import java.util.List;
  * @param corpusId    stable id, e.g. {@code "ica-1872-s27"}
  * @param act         act title, e.g. {@code "Indian Contract Act, 1872"}
  * @param provision   provision label, e.g. {@code "Section 27"}
- * @param heading     marginal heading
- * @param text        condensed editorial summary of the provision (not a verbatim quotation)
+ * @param heading     marginal heading, as enacted
+ * @param summary     plain-language editorial summary; always present, drives retrieval
+ * @param bareAct     verbatim statutory text as enacted, or {@code null} where not carried
+ * @param authority   pointer to the authoritative source (India Code)
  * @param topics      free-text topic tags
  * @param clauseTypes clause types this provision commonly bears on
  */
@@ -35,21 +37,36 @@ public record StatuteProvision(
         String act,
         String provision,
         String heading,
-        String text,
+        String summary,
+        String bareAct,
+        String authority,
         List<String> topics,
         List<String> clauseTypes) {
 
     public StatuteProvision {
         topics = List.copyOf(topics == null ? List.of() : topics);
         clauseTypes = List.copyOf(clauseTypes == null ? List.of() : clauseTypes);
+        if (bareAct != null && bareAct.isBlank()) {
+            bareAct = null;
+        }
     }
 
-    /** The searchable text: heading + body + topic tags. */
+    public boolean hasBareAct() {
+        return bareAct != null;
+    }
+
+    /** Verbatim text where we carry it, otherwise the editorial summary. */
+    public String citationText() {
+        return bareAct != null ? bareAct : summary;
+    }
+
+    /** The searchable text: heading + summary + verbatim text + topic tags. */
     public String searchText() {
-        return heading + ". " + text + " " + String.join(" ", topics);
+        return heading + ". " + summary + (bareAct != null ? " " + bareAct : "")
+                + " " + String.join(" ", topics);
     }
 
     public StatuteRef toRef() {
-        return new StatuteRef(act, provision, text, corpusId);
+        return new StatuteRef(act, provision, citationText(), corpusId);
     }
 }
