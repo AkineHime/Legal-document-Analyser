@@ -37,8 +37,10 @@ import org.slf4j.LoggerFactory;
  * hidden state, L2-normalized).
  *
  * <p>This is the component that demonstrates the project's core claim: a legal-domain transformer
- * doing useful work in-process, on CPU, with no Python and no network. One session is shared for
- * the process lifetime; {@link #embed} is safe to call concurrently.
+ * doing useful work in-process, with no Python and no network - on CPU by default, or on an NVIDIA
+ * GPU via CUDA when requested and available (see {@link #OnnxTextEncoder(Path, BertTokenizer, int,
+ * int, boolean)}). One session is shared for the process lifetime; {@link #embed} is safe to call
+ * concurrently.
  */
 public final class OnnxTextEncoder implements AutoCloseable {
 
@@ -51,6 +53,7 @@ public final class OnnxTextEncoder implements AutoCloseable {
     private final int maxSeqLen;
     private final String hiddenStateOutput;
     private final Set<String> inputNames;
+    private final String device;
 
     /** The same clause text is embedded by both the extraction and grounding stages; cache it. */
     private final java.util.concurrent.ConcurrentHashMap<String, float[]> cache =
@@ -58,6 +61,20 @@ public final class OnnxTextEncoder implements AutoCloseable {
     private static final int MAX_CACHE = 4096;
 
     public OnnxTextEncoder(Path onnxModel, BertTokenizer tokenizer, int maxSeqLen, int intraOpThreads) {
+        this(onnxModel, tokenizer, maxSeqLen, intraOpThreads, false);
+    }
+
+    /**
+     * @param useGpu if true, attempts to run on an NVIDIA GPU via the CUDA execution provider
+     *               before falling back to CPU. Requires a build with the CUDA-enabled ONNX
+     *               Runtime native library (the {@code gpu} Maven profile) <em>and</em> a matching
+     *               CUDA/cuDNN install on the machine; if either is missing, this logs a warning
+     *               and silently continues on CPU rather than failing to load at all - the same
+     *               "degrade, don't break" behaviour as the rest of this codebase's optional-model
+     *               handling.
+     */
+    public OnnxTextEncoder(Path onnxModel, BertTokenizer tokenizer, int maxSeqLen, int intraOpThreads,
+            boolean useGpu) {
         if (!Files.isRegularFile(onnxModel)) {
             throw new UncheckedIOException(new IOException("ONNX model not found: " + onnxModel));
         }
@@ -71,19 +88,37 @@ public final class OnnxTextEncoder implements AutoCloseable {
             opts.setIntraOpNumThreads(Math.max(1, intraOpThreads));
             opts.setMemoryPatternOptimization(true);
 
-            // Cache the graph-optimized model so later cold starts skip re-optimization.
+            boolean gpuActive = false;
+            if (useGpu) {
+                try {
+                    opts.addCUDA(0);
+                    gpuActive = true;
+                } catch (OrtException e) {
+                    log.warn("GPU requested but the CUDA execution provider is unavailable ({}); "
+                            + "continuing on CPU. This needs a build with the 'gpu' Maven profile "
+                            + "and a matching CUDA/cuDNN install.", e.toString());
+                }
+            }
+            this.device = gpuActive ? "cuda" : "cpu";
+
+            // Cache the graph-optimized model so later cold starts skip re-optimization. Skipped
+            // when GPU is active: the cached graph was optimized for CPU execution and reusing it
+            // for CUDA would need re-validating, which is not worth it for what is already the
+            // less-common path.
             Path optimized = onnxModel.resolveSibling(
                     onnxModel.getFileName().toString().replace(".onnx", ".opt.onnx"));
-            if (Files.isRegularFile(optimized)) {
+            if (!gpuActive && Files.isRegularFile(optimized)) {
                 opts.setOptimizationLevel(OrtSession.SessionOptions.OptLevel.BASIC_OPT);
                 this.session = env.createSession(optimized.toString(), opts);
                 log.debug("Loaded pre-optimized encoder graph {}", optimized.getFileName());
             } else {
                 opts.setOptimizationLevel(OrtSession.SessionOptions.OptLevel.ALL_OPT);
-                try {
-                    opts.setOptimizedModelFilePath(optimized.toString());
-                } catch (OrtException e) {
-                    log.debug("Could not set optimized-model path: {}", e.toString());
+                if (!gpuActive) {
+                    try {
+                        opts.setOptimizedModelFilePath(optimized.toString());
+                    } catch (OrtException e) {
+                        log.debug("Could not set optimized-model path: {}", e.toString());
+                    }
                 }
                 this.session = env.createSession(onnxModel.toString(), opts);
             }
@@ -91,11 +126,16 @@ public final class OnnxTextEncoder implements AutoCloseable {
             this.hiddenStateOutput = session.getOutputNames().contains(LAST_HIDDEN_STATE)
                     ? LAST_HIDDEN_STATE
                     : session.getOutputNames().iterator().next();
-            log.info("Loaded ONNX encoder {} (inputs={}, output={}, maxSeq={}, intraOpThreads={})",
-                    onnxModel.getFileName(), inputNames, hiddenStateOutput, this.maxSeqLen, intraOpThreads);
+            log.info("Loaded ONNX encoder {} on {} (inputs={}, output={}, maxSeq={}, intraOpThreads={})",
+                    onnxModel.getFileName(), device, inputNames, hiddenStateOutput, this.maxSeqLen, intraOpThreads);
         } catch (OrtException e) {
             throw new IllegalStateException("Failed to load ONNX encoder " + onnxModel, e);
         }
+    }
+
+    /** {@code "cuda"} or {@code "cpu"} - whichever this encoder actually ended up running on. */
+    public String device() {
+        return device;
     }
 
     public int dimension() {

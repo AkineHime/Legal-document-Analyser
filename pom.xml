@@ -25,6 +25,7 @@
         <module>pipeline</module>
         <module>audit</module>
         <module>app</module>
+        <module>desktop</module>
     </modules>
 
     <properties>
@@ -37,10 +38,19 @@
         <pdfbox.version>2.0.31</pdfbox.version>
         <opennlp.version>2.5.4</opennlp.version>
         <onnxruntime.version>1.20.0</onnxruntime.version>
+        <!-- Swapped to onnxruntime_gpu (same version, CUDA-enabled) by the "gpu" profile below.
+             Left as plain "onnxruntime" (CPU-only, smaller, no CUDA/cuDNN prerequisite) by default,
+             since that is the right default for the product's actual audience. -->
+        <onnxruntime.artifact>onnxruntime</onnxruntime.artifact>
         <jackson.version>2.18.1</jackson.version>
         <log4j.version>2.24.1</log4j.version>
         <slf4j.version>2.0.16</slf4j.version>
         <junit.version>5.11.3</junit.version>
+        <javafx.version>21.0.4</javafx.version>
+        <javafx.maven.plugin.version>0.0.8</javafx.maven.plugin.version>
+        <!-- OpenJFX ships OS-specific artifacts (win/mac/linux); picked by the <profiles> below so
+             a plain `mvn install` resolves the right natives for the machine doing the build. -->
+        <javafx.platform>win</javafx.platform>
 
         <jlama.version>0.8.4</jlama.version>
         <!-- Overridden per-OS/arch by os-maven-plugin below (e.g. linux-x86_64, osx-x86_64). -->
@@ -95,6 +105,16 @@
                 <artifactId>audit</artifactId>
                 <version>${project.version}</version>
             </dependency>
+            <dependency>
+                <groupId>io.statigate</groupId>
+                <artifactId>desktop</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <!-- Desktop UI (JavaFX) is deliberately NOT managed here: Maven only reuses a managed
+                 dependency when its classifier matches exactly, and the platform classifier
+                 (win/mac/linux, picked by the OS-activated profiles below) is per-build-machine, so
+                 desktop/pom.xml pins ${javafx.version} directly on each javafx-* dependency instead. -->
 
             <!-- Ingestion. Tika is scoped to just the parsers a contract tool needs (PDF, MS Office,
                  plain text) rather than the standard package, to cut both the attack surface and
@@ -142,7 +162,7 @@
             <!-- ONNX Runtime (bundles win-x64 native libs) -->
             <dependency>
                 <groupId>com.microsoft.onnxruntime</groupId>
-                <artifactId>onnxruntime</artifactId>
+                <artifactId>${onnxruntime.artifact}</artifactId>
                 <version>${onnxruntime.version}</version>
             </dependency>
             <dependency>
@@ -187,6 +207,52 @@
         </dependency>
     </dependencies>
 
+    <profiles>
+        <!-- Selects the OpenJFX native-artifact classifier for the machine running the build.
+             Override with -Djavafx.platform=... if cross-compiling for another OS. -->
+        <profile>
+            <id>javafx-windows</id>
+            <activation>
+                <os><family>windows</family></os>
+            </activation>
+            <properties>
+                <javafx.platform>win</javafx.platform>
+            </properties>
+        </profile>
+        <profile>
+            <id>javafx-mac</id>
+            <activation>
+                <os><family>mac</family></os>
+            </activation>
+            <properties>
+                <javafx.platform>mac</javafx.platform>
+            </properties>
+        </profile>
+        <profile>
+            <id>javafx-linux</id>
+            <activation>
+                <os><name>Linux</name></os>
+            </activation>
+            <properties>
+                <javafx.platform>linux</javafx.platform>
+            </properties>
+        </profile>
+
+        <!-- Opt-in: `mvn -Pgpu ...` swaps in the CUDA-enabled onnxruntime_gpu artifact (same
+             version, so no other code changes are needed). Still requires the machine to have a
+             matching NVIDIA CUDA Toolkit and cuDNN installed - see nlp/OnnxTextEncoder's javadoc -
+             and "Use GPU acceleration" enabled in the desktop app's Settings; without either, the
+             encoder logs a warning and falls back to CPU automatically rather than failing. Not
+             activated by default: most users have no GPU, and the plain CPU build is smaller and
+             has no extra system prerequisites. -->
+        <profile>
+            <id>gpu</id>
+            <properties>
+                <onnxruntime.artifact>onnxruntime_gpu</onnxruntime.artifact>
+            </properties>
+        </profile>
+    </profiles>
+
     <build>
         <extensions>
             <!-- Sets ${os.detected.classifier} (e.g. windows-x86_64, linux-x86_64, osx-aarch64)
@@ -223,6 +289,11 @@
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-shade-plugin</artifactId>
                     <version>${shade.plugin.version}</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.openjfx</groupId>
+                    <artifactId>javafx-maven-plugin</artifactId>
+                    <version>${javafx.maven.plugin.version}</version>
                 </plugin>
             </plugins>
         </pluginManagement>

@@ -88,17 +88,39 @@ public final class AnalysisPipeline {
         return backends;
     }
 
+    /**
+     * Reports completion of one of the four pipeline stages ({@code "ingestion"},
+     * {@code "extraction"}, {@code "grounding"}, {@code "advisory"}), in that order, so a caller
+     * (e.g. a UI progress indicator) can reflect real progress rather than a simulated one.
+     *
+     * <p>Implementations must return quickly: they run on the same thread as {@link #analyze}, in
+     * the middle of the analysis, so a slow or throwing listener would delay or break the pipeline.
+     * A UI should treat this as "data changed" and hand off to its own thread (e.g. schedule a
+     * {@code Platform.runLater}) rather than doing work here directly.
+     */
+    @FunctionalInterface
+    public interface StageListener {
+        StageListener NO_OP = (stage, elapsedMs) -> { };
+
+        void onStageComplete(String stage, long elapsedMs);
+    }
+
     public PipelineResult analyze(Path file) throws IOException {
+        return analyze(file, StageListener.NO_OP);
+    }
+
+    public PipelineResult analyze(Path file, StageListener listener) throws IOException {
+        StageListener notify = listener != null ? listener : StageListener.NO_OP;
         Map<String, Long> timings = new LinkedHashMap<>();
         long tStart = System.nanoTime();
 
         long t = System.nanoTime();
         Document document = ingestion.ingest(file);
-        timings.put("ingestion", ms(t));
+        report(timings, notify, "ingestion", t);
 
         t = System.nanoTime();
         ExtractionResult extracted = extraction.analyze(document);
-        timings.put("extraction", ms(t));
+        report(timings, notify, "extraction", t);
 
         t = System.nanoTime();
         List<ClauseFinding> findings = new ArrayList<>();
@@ -111,7 +133,7 @@ public final class AnalysisPipeline {
                     : grounding.ground(clause.text(), clause.type(), STATUTES_PER_CLAUSE);
             findings.add(new ClauseFinding(clause, cc, risks, statutes, List.of()));
         }
-        timings.put("grounding", ms(t));
+        report(timings, notify, "grounding", t);
 
         t = System.nanoTime();
         List<ClauseFinding> withAdvice = new ArrayList<>(findings.size());
@@ -130,7 +152,7 @@ public final class AnalysisPipeline {
                     .filter(a -> !a.headline().startsWith("What this clause does"))
                     .toList();
         }
-        timings.put("advisory", ms(t));
+        report(timings, notify, "advisory", t);
         timings.put("total", ms(tStart));
 
         log.info("Analysis complete in {} ms (ingest {}, extract {}, ground {}, advise {})",
@@ -139,6 +161,19 @@ public final class AnalysisPipeline {
 
         return new PipelineResult(document, withAdvice, docRisks, docAdvice,
                 extracted.entities(), timings, backends);
+    }
+
+    private static void report(Map<String, Long> timings, StageListener listener, String stage,
+            long stageStartNanos) {
+        long elapsed = ms(stageStartNanos);
+        timings.put(stage, elapsed);
+        try {
+            listener.onStageComplete(stage, elapsed);
+        } catch (RuntimeException e) {
+            // A misbehaving listener (e.g. a UI callback) must never abort or corrupt an
+            // otherwise-successful analysis.
+            log.warn("StageListener threw for stage '{}': {}", stage, e.toString());
+        }
     }
 
     private static List<RiskFlag> risksFor(Clause clause, List<RiskFlag> all) {

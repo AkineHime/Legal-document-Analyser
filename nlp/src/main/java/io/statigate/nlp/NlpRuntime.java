@@ -39,6 +39,7 @@ public final class NlpRuntime implements AutoCloseable {
     private final ModelLocator locator;
     private final int maxSeqLen;
     private final int intraOpThreads;
+    private final boolean useGpu;
 
     private OnnxTextEncoder encoder;
     private boolean initialized;
@@ -48,9 +49,15 @@ public final class NlpRuntime implements AutoCloseable {
     }
 
     public NlpRuntime(ModelLocator locator, int maxSeqLen, int intraOpThreads) {
+        this(locator, maxSeqLen, intraOpThreads, false);
+    }
+
+    /** @param useGpu see {@link OnnxTextEncoder#OnnxTextEncoder(Path, BertTokenizer, int, int, boolean)}. */
+    public NlpRuntime(ModelLocator locator, int maxSeqLen, int intraOpThreads, boolean useGpu) {
         this.locator = locator;
         this.maxSeqLen = maxSeqLen;
         this.intraOpThreads = intraOpThreads;
+        this.useGpu = useGpu;
     }
 
     public ModelLocator locator() {
@@ -69,7 +76,7 @@ public final class NlpRuntime implements AutoCloseable {
                 int seq = Math.min(maxSeqLen, readMaxSeq());
                 BertTokenizer tok = BertTokenizer.fromVocabFile(
                         locator.inLegalBertVocab(), lowercase, lowercase);
-                encoder = new OnnxTextEncoder(locator.inLegalBertOnnx(), tok, seq, intraOpThreads);
+                encoder = new OnnxTextEncoder(locator.inLegalBertOnnx(), tok, seq, intraOpThreads, useGpu);
             } else {
                 log.warn("InLegalBERT model not found under {} - running model-free.",
                         locator.inLegalBertDir());
