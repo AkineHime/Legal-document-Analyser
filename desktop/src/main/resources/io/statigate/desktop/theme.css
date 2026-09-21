@@ -1,0 +1,556 @@
+/*
+ * Copyright 2026 The Statigate Authors
+ * Licensed under the Apache License, Version 2.0 - see LICENSE.
+ *
+ * Theme: a dashboard shell (dark left sidebar, light content, top search bar) in the "lotus pond"
+ * palette - dark green, moss green, beige, rosy brown and midnight green. Every color used anywhere
+ * in the app is a named token defined once here, in .root - components reference tokens, never
+ * literal hex values, so the whole app can be re-themed by editing this one block. Token NAMES are
+ * kept from the app's previous warm palette (sage/olive/brown/etc.) since they still describe the
+ * role a color plays, not a specific hue; only the values below are the lotus-pond palette.
+ */
+
+.root {
+    -statigate-parchment: #F7F4D5;      /* beige - main page background */
+    -statigate-card: derive(-statigate-parchment, 35%);   /* near-white card surface */
+    -statigate-sage: derive(#839958, 42%);                /* light moss tint - subtle chip/hover fills */
+    -statigate-olive: #839958;                            /* moss green - mid accent (icons, meters) */
+    -statigate-brown: derive(#D3968C, -35%);              /* rosy brown, darkened - secondary accent */
+    -statigate-charcoal: #0A3323;                         /* dark green - headings, strongest text */
+    -statigate-ink: derive(-statigate-charcoal, 12%);
+    -statigate-ink-soft: derive(-statigate-charcoal, 48%);
+    -statigate-hairline: derive(#839958, 68%);
+
+    -statigate-sidebar: #0A3323;         /* dark green sidebar */
+    -statigate-sidebar-text: #F7F4D5;    /* beige */
+    -statigate-sidebar-text-dim: derive(#839958, 32%);
+    -statigate-sidebar-active: -statigate-parchment;
+
+    -statigate-teal: #105666;            /* midnight green - primary accent (links, focus, chips) */
+    -statigate-teal-soft: derive(-statigate-teal, 85%);
+
+    -statigate-high: derive(#D3968C, -28%);       /* rosy brown, deepened - high severity */
+    -statigate-high-soft: derive(#D3968C, 55%);
+    -statigate-medium: #AB9872;                   /* rosy brown x moss green blend - medium severity */
+    -statigate-medium-soft: derive(-statigate-medium, 58%);
+    -statigate-low: derive(#839958, -18%);        /* moss green, deepened - low severity */
+    -statigate-low-soft: derive(#839958, 62%);
+
+    -fx-font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+    -fx-background-color: -statigate-parchment;
+    -fx-font-size: 13px;
+}
+
+.serif {
+    -fx-font-family: "Georgia", "Times New Roman", serif;
+}
+
+/* ---------------------------------------------------------------- app shell / scrolling ---- */
+
+.app-shell {
+    -fx-background-color: -statigate-parchment;
+}
+
+.content-scroll {
+    -fx-background-color: transparent;
+    -fx-background: transparent;
+}
+.content-scroll > .viewport {
+    -fx-background-color: transparent;
+}
+.content-scroll .scroll-bar:vertical {
+    -fx-pref-width: 11;
+}
+.content-scroll .scroll-bar .thumb {
+    -fx-background-color: -statigate-sage;
+    -fx-background-radius: 6;
+}
+.content-scroll .scroll-bar .track {
+    -fx-background-color: transparent;
+}
+
+.icon-shape {
+    /* Base ink for every icon; contextual rules below override per surface. Shapes that are
+       filled-only (dots, leaves, arrowheads) simply ignore the stroke color. */
+    -fx-fill: -statigate-ink;
+    -fx-stroke: -statigate-ink;
+}
+
+/* ------------------------------------------------------------------------------ sidebar ---- */
+
+.sidebar {
+    -fx-background-color: -statigate-sidebar;
+    -fx-padding: 22 14;
+}
+
+.sidebar-brand-mark {
+    -fx-stroke: -statigate-sidebar-text;
+    -fx-fill: transparent;
+    -fx-stroke-width: 1.1;
+}
+.sidebar-brand-letter {
+    -fx-fill: -statigate-sidebar-text;
+    -fx-font-family: "Georgia", serif;
+    -fx-font-size: 13px;
+    -fx-font-weight: bold;
+}
+.sidebar-brand-name {
+    -fx-text-fill: -statigate-sidebar-text;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+}
+.sidebar-brand-tag {
+    -fx-text-fill: -statigate-sidebar-text-dim;
+    -fx-font-size: 9.5px;
+}
+
+.sidebar-section-label {
+    -fx-text-fill: -statigate-sidebar-text-dim;
+    -fx-font-size: 10px;
+    -fx-font-weight: bold;
+    -fx-padding: 14 10 4 10;
+}
+
+.nav-item {
+    -fx-background-color: transparent;
+    -fx-background-radius: 10;
+    -fx-padding: 9 12;
+    -fx-cursor: hand;
+    -fx-alignment: CENTER_LEFT;
+    -fx-max-width: infinity;
+}
+.nav-item .icon-shape {
+    -fx-fill: -statigate-sidebar-text-dim;
+    -fx-stroke: -statigate-sidebar-text-dim;
+}
+.nav-item-label {
+    -fx-text-fill: -statigate-sidebar-text;
+    -fx-font-size: 12.5px;
+    -fx-font-weight: bold;
+}
+.nav-item:hover {
+    -fx-background-color: rgba(255,255,255,0.06);
+}
+.nav-item.active {
+    -fx-background-color: -statigate-sidebar-active;
+}
+.nav-item.active .nav-item-label {
+    -fx-text-fill: -statigate-charcoal;
+}
+.nav-item.active .icon-shape {
+    -fx-fill: -statigate-charcoal;
+    -fx-stroke: -statigate-charcoal;
+}
+
+.sidebar-footer-note {
+    -fx-text-fill: -statigate-sidebar-text-dim;
+    -fx-font-size: 9.5px;
+    -fx-wrap-text: true;
+}
+
+/* -------------------------------------------------------------------------------- topbar ---- */
+
+.topbar {
+    -fx-background-color: -statigate-parchment;
+    -fx-padding: 22 32 16 32;
+    -fx-border-color: transparent transparent -statigate-hairline transparent;
+    -fx-border-width: 1;
+}
+
+.topbar-heading {
+    -fx-text-fill: -statigate-charcoal;
+    -fx-font-family: "Georgia", serif;
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+}
+.topbar-subheading {
+    -fx-text-fill: -statigate-ink-soft;
+    -fx-font-size: 12px;
+}
+
+.search-field {
+    -fx-background-color: -statigate-card;
+    -fx-background-radius: 999;
+    -fx-border-color: -statigate-hairline;
+    -fx-border-radius: 999;
+    -fx-border-width: 1;
+    -fx-padding: 8 16 8 34;
+    -fx-font-size: 12px;
+    -fx-text-fill: -statigate-ink;
+    -fx-prompt-text-fill: -statigate-ink-soft;
+}
+.search-field:focused {
+    -fx-border-color: -statigate-teal;
+}
+.search-icon .icon-shape {
+    -fx-fill: -statigate-ink-soft;
+    -fx-stroke: -statigate-ink-soft;
+}
+
+.icon-button {
+    -fx-background-color: transparent;
+    -fx-background-radius: 999;
+    -fx-border-color: -statigate-hairline;
+    -fx-border-radius: 999;
+    -fx-border-width: 1;
+    -fx-padding: 7;
+    -fx-cursor: hand;
+}
+.icon-button .icon-shape {
+    -fx-fill: -statigate-ink;
+    -fx-stroke: -statigate-ink;
+}
+.icon-button:hover {
+    -fx-background-color: derive(-statigate-sage, 75%);
+}
+.icon-button:pressed {
+    -fx-background-color: derive(-statigate-sage, 65%);
+}
+
+/* -------------------------------------------------------------------------- drop zone ------ */
+
+.drop-zone {
+    -fx-background-color: -statigate-card;
+    -fx-background-radius: 18;
+    -fx-border-color: -statigate-hairline;
+    -fx-border-width: 1.6;
+    -fx-border-radius: 18;
+    -fx-border-style: segments(9, 7);
+    -fx-cursor: hand;
+}
+.drop-zone.drag-over {
+    -fx-background-color: -statigate-teal-soft;
+    -fx-border-color: -statigate-teal;
+}
+.drop-zone:disabled {
+    -fx-opacity: 0.55;
+    -fx-cursor: default;
+}
+.drop-zone .icon-shape {
+    -fx-fill: -statigate-brown;
+    -fx-stroke: -statigate-brown;
+}
+.drop-zone-title {
+    -fx-text-fill: -statigate-charcoal;
+    -fx-font-size: 15px;
+    -fx-font-weight: bold;
+}
+.drop-zone-subtitle {
+    -fx-text-fill: -statigate-ink-soft;
+    -fx-font-size: 11.5px;
+}
+.drop-zone-browse {
+    -fx-background-color: -statigate-charcoal;
+    -fx-text-fill: -statigate-parchment;
+    -fx-font-size: 12px;
+    -fx-font-weight: bold;
+    -fx-background-radius: 999;
+    -fx-padding: 8 22;
+    -fx-cursor: hand;
+}
+.drop-zone-browse:hover {
+    -fx-background-color: -statigate-brown;
+}
+.drop-zone-browse:pressed {
+    -fx-background-color: derive(-statigate-brown, -15%);
+}
+.drop-zone-browse:focused {
+    -fx-border-color: -statigate-teal;
+    -fx-border-width: 2;
+    -fx-border-radius: 999;
+}
+
+/* ------------------------------------------------------------------------------ cards ------ */
+
+.section-card {
+    -fx-background-color: -statigate-card;
+    -fx-background-radius: 14;
+    -fx-border-color: -statigate-hairline;
+    -fx-border-radius: 14;
+    -fx-border-width: 1;
+    -fx-padding: 18;
+    -fx-effect: dropshadow(gaussian, rgba(10,51,35,0.06), 12, 0, 0, 2);
+}
+.section-card-title {
+    -fx-text-fill: -statigate-charcoal;
+    -fx-font-family: "Georgia", serif;
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+}
+.section-card-subtitle {
+    -fx-text-fill: -statigate-ink-soft;
+    -fx-font-size: 11.5px;
+}
+
+.stat-tile {
+    -fx-background-color: -statigate-card;
+    -fx-background-radius: 12;
+    -fx-border-color: -statigate-hairline;
+    -fx-border-radius: 12;
+    -fx-border-width: 1;
+    -fx-padding: 14 16;
+}
+.stat-tile-value {
+    -fx-text-fill: -statigate-charcoal;
+    -fx-font-family: "Georgia", serif;
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+}
+.stat-tile-label {
+    -fx-text-fill: -statigate-ink-soft;
+    -fx-font-size: 10.5px;
+    -fx-font-weight: bold;
+}
+
+.clause-card {
+    -fx-background-color: -statigate-card;
+    -fx-background-radius: 12;
+    -fx-border-color: -statigate-hairline;
+    -fx-border-radius: 12;
+    -fx-border-width: 1;
+    -fx-padding: 14 16;
+}
+/* Same severity tokens as .severity-badge, applied as a left accent instead of a fill so a
+   flagged clause reads as "worth a look" before its badge text is even legible. */
+.clause-card.high {
+    -fx-border-color: -statigate-hairline -statigate-hairline -statigate-hairline -statigate-high;
+    -fx-border-width: 1 1 1 4;
+}
+.clause-card.medium {
+    -fx-border-color: -statigate-hairline -statigate-hairline -statigate-hairline -statigate-medium;
+    -fx-border-width: 1 1 1 4;
+}
+.clause-card.low {
+    -fx-border-color: -statigate-hairline -statigate-hairline -statigate-hairline -statigate-low;
+    -fx-border-width: 1 1 1 4;
+}
+.clause-card-type {
+    -fx-text-fill: -statigate-charcoal;
+    -fx-font-size: 13.5px;
+    -fx-font-weight: bold;
+}
+.clause-card-text {
+    -fx-text-fill: -statigate-ink;
+    -fx-font-size: 12px;
+}
+.clause-card-toggle {
+    -fx-text-fill: -statigate-teal;
+    -fx-font-size: 11px;
+    -fx-font-weight: bold;
+    -fx-background-color: transparent;
+    -fx-padding: 2 0;
+    -fx-cursor: hand;
+}
+.clause-card-toggle:hover {
+    -fx-underline: true;
+}
+
+/* --------------------------------------------------------------------- badges / chips ------ */
+
+.severity-badge {
+    -fx-background-radius: 999;
+    -fx-padding: 3 10;
+    -fx-font-size: 10.5px;
+    -fx-font-weight: bold;
+}
+.severity-badge.high {
+    -fx-background-color: -statigate-high-soft;
+    -fx-text-fill: -statigate-high;
+}
+.severity-badge.medium {
+    -fx-background-color: -statigate-medium-soft;
+    -fx-text-fill: -statigate-medium;
+}
+.severity-badge.low {
+    -fx-background-color: -statigate-low-soft;
+    -fx-text-fill: -statigate-low;
+}
+.severity-badge.unrated {
+    -fx-background-color: derive(-statigate-sage, 70%);
+    -fx-text-fill: -statigate-brown;
+}
+
+.confidence-track {
+    -fx-background-color: derive(-statigate-sage, 55%);
+    -fx-background-radius: 999;
+}
+.confidence-fill {
+    -fx-background-color: -statigate-olive;
+    -fx-background-radius: 999;
+}
+.confidence-fill.low-confidence {
+    -fx-background-color: -statigate-medium;
+}
+.confidence-label {
+    -fx-text-fill: -statigate-ink-soft;
+    -fx-font-size: 10px;
+    -fx-font-weight: bold;
+}
+
+.statute-chip {
+    -fx-background-color: -statigate-teal-soft;
+    -fx-background-radius: 8;
+    -fx-padding: 5 10;
+    -fx-cursor: hand;
+}
+.statute-chip:hover {
+    -fx-background-color: derive(-statigate-teal-soft, -8%);
+}
+.statute-chip-text {
+    -fx-text-fill: -statigate-teal;
+    -fx-font-size: 11px;
+    -fx-font-weight: bold;
+}
+
+.entity-chip {
+    -fx-background-color: derive(-statigate-sage, 68%);
+    -fx-background-radius: 8;
+    -fx-padding: 5 10;
+}
+.entity-chip-type {
+    -fx-text-fill: -statigate-brown;
+    -fx-font-size: 9.5px;
+    -fx-font-weight: bold;
+}
+.entity-chip-text {
+    -fx-text-fill: -statigate-charcoal;
+    -fx-font-size: 11.5px;
+}
+
+.backend-note {
+    -fx-text-fill: -statigate-ink-soft;
+    -fx-font-size: 10.5px;
+    -fx-font-style: italic;
+}
+
+/* ------------------------------------------------------------------------------- states ---- */
+
+.empty-state, .error-banner {
+    -fx-background-color: -statigate-card;
+    -fx-background-radius: 14;
+    -fx-border-color: -statigate-hairline;
+    -fx-border-radius: 14;
+    -fx-border-width: 1;
+    -fx-padding: 24;
+}
+.error-banner {
+    -fx-border-color: derive(-statigate-high, 40%);
+    -fx-background-color: -statigate-high-soft;
+}
+.empty-state-title, .error-banner-title {
+    -fx-text-fill: -statigate-charcoal;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+}
+.error-banner-title {
+    -fx-text-fill: -statigate-high;
+}
+.empty-state-body, .error-banner-body {
+    -fx-text-fill: -statigate-ink-soft;
+    -fx-font-size: 12px;
+}
+.error-banner-retry {
+    -fx-background-color: -statigate-high;
+    -fx-text-fill: white;
+    -fx-font-size: 11.5px;
+    -fx-font-weight: bold;
+    -fx-background-radius: 999;
+    -fx-padding: 7 18;
+    -fx-cursor: hand;
+}
+.error-banner-retry:hover {
+    -fx-background-color: derive(-statigate-high, -12%);
+}
+
+.loading-overlay {
+    -fx-background-color: rgba(247,244,213,0.92);
+}
+.loading-title {
+    -fx-text-fill: -statigate-charcoal;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+}
+.loading-caption {
+    -fx-text-fill: -statigate-ink-soft;
+    -fx-font-size: 11.5px;
+    -fx-font-style: italic;
+}
+.loading-elapsed {
+    -fx-text-fill: derive(-statigate-ink-soft, 25%);
+    -fx-font-size: 10px;
+}
+.loading-spinner {
+    -fx-progress-color: -statigate-olive;
+}
+
+.footer-note {
+    -fx-text-fill: derive(-statigate-ink-soft, 20%);
+    -fx-font-size: 10px;
+}
+
+/* --------------------------------------------------------------------- document library ---- */
+
+.doc-card {
+    -fx-background-color: -statigate-card;
+    -fx-background-radius: 14;
+    -fx-border-color: -statigate-hairline;
+    -fx-border-radius: 14;
+    -fx-border-width: 1;
+    -fx-padding: 0 0 14 0;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(gaussian, rgba(10,51,35,0.05), 10, 0, 0, 2);
+}
+.doc-card:hover {
+    -fx-border-color: -statigate-olive;
+    -fx-effect: dropshadow(gaussian, rgba(10,51,35,0.10), 14, 0, 0, 3);
+}
+.doc-card-accent {
+    -fx-background-radius: 14 14 0 0;
+    -fx-pref-height: 8;
+}
+.doc-card-accent.high {
+    -fx-background-color: -statigate-high;
+}
+.doc-card-accent.medium {
+    -fx-background-color: -statigate-medium;
+}
+.doc-card-accent.low {
+    -fx-background-color: -statigate-low;
+}
+.doc-card-accent.none {
+    -fx-background-color: -statigate-hairline;
+}
+.doc-card-body {
+    -fx-padding: 14 16 0 16;
+}
+.doc-card-title {
+    -fx-text-fill: -statigate-charcoal;
+    -fx-font-size: 13.5px;
+    -fx-font-weight: bold;
+}
+.doc-card-meta {
+    -fx-text-fill: -statigate-ink-soft;
+    -fx-font-size: 10.5px;
+}
+.doc-card-stat {
+    -fx-text-fill: -statigate-brown;
+    -fx-font-size: 10.5px;
+    -fx-font-weight: bold;
+}
+.doc-card-delete {
+    -fx-background-color: transparent;
+    -fx-background-radius: 999;
+    -fx-padding: 5;
+    -fx-cursor: hand;
+}
+.doc-card-delete .icon-shape {
+    -fx-fill: -statigate-ink-soft;
+    -fx-stroke: -statigate-ink-soft;
+}
+.doc-card-delete:hover {
+    -fx-background-color: -statigate-high-soft;
+}
+.doc-card-delete:hover .icon-shape {
+    -fx-fill: -statigate-high;
+    -fx-stroke: -statigate-high;
+}
