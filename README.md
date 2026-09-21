@@ -32,6 +32,7 @@ on any JRE 21** and works on an air-gapped machine.
 | `pipeline` | `AnalysisPipeline` — the four stages, one shared encoder, per-stage timings. |
 | `audit` | Counterfactual fairness check: the analysis must be invariant when only party names, gender and region are swapped. |
 | `app` | The `statigate` command line. |
+| `desktop` | A JavaFX dashboard over the same pipeline — drop in a contract, read the report, revisit past analyses from a local library. See [`desktop/README.md`](desktop/README.md). |
 
 ## The AI model
 
@@ -54,6 +55,22 @@ mvn clean package
 ```
 
 Produces `app/target/statigate.jar` (self-contained).
+
+### Quick setup on a new Windows machine
+
+Setting this up on a teammate's laptop (JDK, Maven, and the initial build) in one step:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File scripts\setup_windows.ps1
+```
+
+Installs Temurin JDK 21 and Maven if either is missing (safe to re-run), then runs `mvn install
+-DskipTests`. It does **not** fetch the InLegalBERT model — that's ~630MB and gitignored on
+purpose (see [Model setup](#model-setup-once-offline-afterwards) below) — it just tells you at the
+end whether the two files Statigate actually reads (`model.int8.onnx`, `vocab.txt`) are present
+under `models/inlegalbert/`. Without them, Statigate still runs correctly in keyword/BM25-only
+mode; copying those two files from someone who has already exported them is far quicker than
+re-running the export script from scratch.
 
 ## Model setup (once; offline afterwards)
 
@@ -103,6 +120,21 @@ Fairness check:
 ```bash
 java -cp app/target/statigate.jar io.statigate.audit.BiasAuditMain
 ```
+
+## Desktop app
+
+A JavaFX front end over the same offline pipeline, for demos and everyday use: drag a contract in,
+watch it analyze, read the report, and reopen anything analyzed before from a local library without
+re-running the pipeline (documents are recognized by content, so dropping in the same file twice
+shows the saved result instead of re-analyzing it).
+
+```bash
+mvn install -DskipTests    # once, from the repository root
+cd desktop
+mvn javafx:run
+```
+
+See [`desktop/README.md`](desktop/README.md) for details.
 
 ## Sample contracts
 
