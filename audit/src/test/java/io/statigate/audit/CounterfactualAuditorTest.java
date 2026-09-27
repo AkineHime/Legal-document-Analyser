@@ -16,6 +16,7 @@
 
 package io.statigate.audit;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -25,6 +26,7 @@ import io.statigate.pipeline.AnalysisPipeline;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
+import java.util.Set;
 import org.junit.jupiter.api.Test;
 
 class CounterfactualAuditorTest {
@@ -33,7 +35,7 @@ class CounterfactualAuditorTest {
 
     @Test
     void identitySwapsDoNotChangeTheAnalysisSignal() throws Exception {
-        List<CounterfactualCase> cases = BiasAuditMain.loadCases();
+        List<CounterfactualCase> cases = identityCases();
         assertFalse(cases.isEmpty());
 
         Path tmp = Files.createTempDirectory("cf-audit-test");
@@ -46,5 +48,53 @@ class CounterfactualAuditorTest {
                                 + CounterfactualAuditor.render(List.of(result)));
             }
         }
+    }
+
+    /**
+     * Characterises a known, real finding (Statigate_Project_Documentation Section 4.8/5.1)
+     * rather than asserting an ideal that the system does not meet: substituting only the
+     * corporate-form suffix in the PARTIES clause ("Private Limited" -> "Proprietorship") flips
+     * the vendor-msa PARTIES clause to SCOPE_OF_WORK, because the keyword classifier's PARTIES
+     * cues lean on that suffix. This test locks the finding in place so a future change to the
+     * classifier either fixes it (and this test starts failing, prompting an update here and in
+     * the paper) or leaves it as a documented limitation.
+     */
+    @Test
+    void corporateFormSubstitutionExposesAKnownClassifierSensitivity() throws Exception {
+        List<CounterfactualCase> cases = corporateFormCases();
+        assertEquals(3, cases.size());
+
+        Path tmp = Files.createTempDirectory("cf-audit-corporate-form-test");
+        try (NlpRuntime runtime = new NlpRuntime(new ModelLocator(MODELS), 256, 2)) {
+            var auditor = new CounterfactualAuditor(AnalysisPipeline.create(runtime));
+            for (CounterfactualCase c : cases) {
+                var result = auditor.audit(c, tmp);
+                if (c.name().equals("vendor-msa-corporate-form")) {
+                    assertFalse(result.stable(), "expected the known vendor-msa corporate-form "
+                            + "instability to still reproduce - if this now passes, the "
+                            + "classifier sensitivity documented in Section 4.8/5.1 has been "
+                            + "fixed and the paper should be updated to say so");
+                    var variant = result.variants().get(0);
+                    assertEquals(Set.of("clause:SCOPE_OF_WORK"), variant.added());
+                    assertEquals(Set.of("clause:PARTIES"), variant.removed());
+                } else {
+                    assertTrue(result.stable(),
+                            () -> "case '" + c.name() + "' changed under corporate-form swap: "
+                                    + CounterfactualAuditor.render(List.of(result)));
+                }
+            }
+        }
+    }
+
+    private static List<CounterfactualCase> identityCases() throws Exception {
+        return BiasAuditMain.loadCases().stream()
+                .filter(c -> !c.name().endsWith("-corporate-form"))
+                .toList();
+    }
+
+    private static List<CounterfactualCase> corporateFormCases() throws Exception {
+        return BiasAuditMain.loadCases().stream()
+                .filter(c -> c.name().endsWith("-corporate-form"))
+                .toList();
     }
 }
